@@ -31,12 +31,11 @@ const HeaderLink = styled(Link)`
 `;
 
 export default function Header() {
-  const isLoggedIn = Boolean(localStorage.getItem('accessToken'));
+  const isLoggedIn = localStorage.getItem('accessToken');
 
   return (
     <HeaderBar>
       <Logo to="/">HOLIDAZE</Logo>
-
       {isLoggedIn ? (
         <HeaderLink to="/profile">
           <User size={24} />
