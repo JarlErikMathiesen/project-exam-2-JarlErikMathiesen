@@ -1,5 +1,6 @@
 import Layout from './components/layout/Layout';
 import { apiFetch } from './api/client';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const getVenues = async () => {
   const data = await apiFetch('/venues');
@@ -35,11 +36,18 @@ function HomePage() {
   );
 }
 
+function Login() {
+  return <h1>login</h1>;
+}
+
 function App() {
   return (
     <>
       <Layout>
-        <HomePage />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </Layout>
     </>
   );
