@@ -1,45 +1,7 @@
 import Layout from './components/layout/Layout';
-import { apiFetch } from './api/client';
-import { Routes, Route, Link } from 'react-router-dom';
-import { getVenues } from './api/venues';
-
-import { useEffect, useState } from 'react';
-
-function HomePage() {
-  const [venues, setVenues] = useState([]);
-
-  useEffect(() => {
-    async function loadVenues() {
-      try {
-        const data = await getVenues();
-        /* console.log(data); */
-        setVenues(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    loadVenues();
-  }, []);
-
-  return (
-    <div>
-      {venues.map((venue) => (
-        <Link
-          key={venue.id}
-          to={`/product/${venue.id}`}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
-          <p key={venue.id}>{venue.name}</p>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
-function Login() {
-  return <h1>login</h1>;
-}
+import { Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import Login from './pages/Login';
 
 function App() {
   return (
