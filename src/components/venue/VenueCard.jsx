@@ -1,0 +1,125 @@
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { Users } from 'lucide-react';
+
+const Card = styled(Link)`
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: 10px 10px 2px 2px;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+`;
+
+const Content = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const LeftContent = styled.div`
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const Name = styled.h2`
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 300;
+`;
+
+const Location = styled.p`
+  font-size: 0.6rem;
+  opacity: 0.8;
+  margin: 0;
+`;
+
+const InfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const SmallInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+`;
+
+const Price = styled.p`
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0;
+`;
+
+const PriceText = styled.p`
+  margin-bottom: 0;
+`;
+
+const RatingBox = styled.div`
+  background: ${({ theme }) => theme.colors.primary};
+  padding: 4px;
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const RightContent = styled.div`
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: space-between;
+`;
+
+export default function VenueCard({ venue }) {
+  const imageUrl = venue.media?.[0]?.url;
+
+  return (
+    <Card to={`/venue/${venue.id}`}>
+      <ImageWrapper>
+        <Image src={imageUrl} alt={venue.name} />
+      </ImageWrapper>
+      <Content>
+        <LeftContent>
+          <InfoRow>
+            <Name>{venue.name}</Name>
+          </InfoRow>
+          <Location>
+            {venue.location?.city}, {venue.location?.country}
+          </Location>
+
+          <InfoRow>
+            <SmallInfo>
+              Max
+              <Users size={16} />
+              {venue.maxGuests}
+            </SmallInfo>
+          </InfoRow>
+        </LeftContent>
+        <RightContent>
+          <SmallInfo>
+            rating
+            <RatingBox>{venue.rating || '—'}</RatingBox>
+          </SmallInfo>
+          <div>
+            <PriceText>per night</PriceText>
+            <Price>{venue.price}£</Price>
+          </div>
+        </RightContent>
+      </Content>
+    </Card>
+  );
+}

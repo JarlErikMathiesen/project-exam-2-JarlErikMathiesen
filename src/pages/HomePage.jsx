@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getVenues } from '../api/venues';
+import VenueCard from '../components/venue/VenueCard';
 
 const VenueList = styled.div`
   display: flex;
@@ -25,6 +26,7 @@ export default function HomePage() {
       try {
         const data = await getVenues();
         setVenues(data);
+        console.log(data);
       } catch (err) {
         console.error(err);
         setError('Failed to load venues');
@@ -42,9 +44,7 @@ export default function HomePage() {
   return (
     <VenueList>
       {venues.map((venue) => (
-        <VenueLink key={venue.id} to={`/venue/${venue.id}`}>
-          <p>{venue.name}</p>
-        </VenueLink>
+        <VenueCard key={venue.id} venue={venue} />
       ))}
     </VenueList>
   );
