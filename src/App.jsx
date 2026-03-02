@@ -1,12 +1,7 @@
 import Layout from './components/layout/Layout';
 import { apiFetch } from './api/client';
 import { Routes, Route, Link } from 'react-router-dom';
-
-const getVenues = async () => {
-  const data = await apiFetch('/venues');
-
-  return data.data;
-};
+import { getVenues } from './api/venues';
 
 import { useEffect, useState } from 'react';
 
@@ -30,7 +25,13 @@ function HomePage() {
   return (
     <div>
       {venues.map((venue) => (
-        <p key={venue.id}>{venue.name}</p>
+        <Link
+          key={venue.id}
+          to={`/product/${venue.id}`}
+          style={{ textDecoration: 'none', color: 'inherit' }}
+        >
+          <p key={venue.id}>{venue.name}</p>
+        </Link>
       ))}
     </div>
   );
