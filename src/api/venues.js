@@ -6,7 +6,7 @@ export const getVenues = async () => {
 };
 
 export const getVenueById = async (id) => {
-  const data = await apiFetch(`/venues/${id}`);
+  const data = await apiFetch(`/venues/${id}?_owner=true`);
   return data.data;
 };
 

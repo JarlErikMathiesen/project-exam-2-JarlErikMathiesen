@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Users } from 'lucide-react';
+import RatingBox from '../ui/RatingBox';
 
 const Card = styled(Link)`
   background: ${({ theme }) => theme.colors.white};
-  border-radius: 10px 10px 2px 2px;
+  border-radius: ${({ theme }) => theme.radius.md};
   border: 1px solid ${({ theme }) => theme.colors.border};
   overflow: hidden;
   text-decoration: none;
@@ -70,11 +71,11 @@ const PriceText = styled.p`
   margin-bottom: 0;
 `;
 
-const RatingBox = styled.div`
+/* const RatingBox = styled.div`
   background: ${({ theme }) => theme.colors.primary};
   padding: 4px;
   color: ${({ theme }) => theme.colors.white};
-`;
+`; */
 
 const RightContent = styled.div`
   padding: 1rem;
@@ -110,10 +111,7 @@ export default function VenueCard({ venue }) {
           </InfoRow>
         </LeftContent>
         <RightContent>
-          <SmallInfo>
-            rating
-            <RatingBox>{venue.rating || '—'}</RatingBox>
-          </SmallInfo>
+          <RatingBox>{venue.rating || '—'}</RatingBox>
           <div>
             <PriceText>per night</PriceText>
             <Price>{venue.price}£</Price>

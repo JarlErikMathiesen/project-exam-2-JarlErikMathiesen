@@ -1,4 +1,3 @@
-
 export const theme = {
   colors: {
     primary: '#2D423F',
@@ -10,5 +9,15 @@ export const theme = {
 
   font: {
     family: "'Manrope', sans-serif",
+  },
+
+  radius: {
+    sm: '6px',
+    md: '10px 10px 2px 2px',
+    lg: '16px',
+  },
+
+  layout: {
+    maxWidth: '1200px',
   },
 };
