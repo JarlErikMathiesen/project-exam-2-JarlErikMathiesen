@@ -3,16 +3,8 @@ import { useEffect, useState } from 'react';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
 import RatingBox from '../components/ui/RatingBox';
-import {
-  Fish,
-  FishOff,
-  Wifi,
-  WifiOff,
-  EggFried,
-  EggOff,
-  CircleParking,
-  CircleParkingOff,
-} from 'lucide-react';
+
+import { amenities } from '../utils/amenities';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -21,10 +13,19 @@ const BookingBox = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 `;
 
-const Amenities = styled(BookingBox)`
+const Amenities = styled.div`
   display: flex;
-  gap: 1rem;
-  width: fit-content;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+`;
+
+const AmenityItem = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.2rem;
+  opacity: 0.75;
+  text-transform: capitalize;
 `;
 
 const Grid = styled.div`
@@ -39,6 +40,7 @@ const Grid = styled.div`
 const MainContent = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 0;
 `;
 
 const Sidebar = styled.div`
@@ -61,6 +63,20 @@ const MainImage = styled.img`
 
 const Title = styled.h1`
   margin: 0;
+  font-size: 2rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  min-width: 0;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0
+  width: 100%;
+  min-width: 0;
 `;
 
 const Location = styled.p`
@@ -91,12 +107,6 @@ const OwnerImage = styled.img`
   border-radius: 20px;
   height: 2rem;
   width: 2rem;
-`;
-
-const TitleWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 `;
 
 const PriceRow = styled.div`
@@ -180,10 +190,22 @@ export default function VenueDetailPage() {
           </PriceOwnerWrapper>
 
           <Amenities>
-            {venue.meta?.wifi ? <Wifi /> : <WifiOff />}
-            {venue.meta?.parking ? <CircleParking /> : <CircleParkingOff />}
-            {venue.meta?.breakfast ? <EggFried /> : <EggOff />}
-            {venue.meta?.pets ? <Fish /> : <FishOff />}
+            {amenities.map(
+              ({ key, trueLabel, falseLabel, TrueIcon, FalseIcon }) => {
+                const available = venue.meta?.[key];
+                const Icon = available ? TrueIcon : FalseIcon;
+                const label = available ? trueLabel : falseLabel;
+                return (
+                  <AmenityItem
+                    key={key}
+                    style={{ opacity: available ? 0.9 : 0.35 }}
+                  >
+                    <Icon size={16} />
+                    {label}
+                  </AmenityItem>
+                );
+              },
+            )}
           </Amenities>
           <Description>{venue.description}</Description>
         </MainContent>

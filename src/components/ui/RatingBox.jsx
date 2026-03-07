@@ -4,6 +4,8 @@ const RatingWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  margin-top: 10px;
+  align-self: baseline;
 `;
 
 const StyledRatingBox = styled.span`
