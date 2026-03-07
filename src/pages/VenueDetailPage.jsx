@@ -3,15 +3,8 @@ import { useEffect, useState } from 'react';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
 import RatingBox from '../components/ui/RatingBox';
-
+import BookingCard from '../components/venue/BookingCard';
 import { amenities } from '../utils/amenities';
-
-const BookingBox = styled.div`
-  background: ${({ theme }) => theme.colors.white};
-  padding: 1.5rem;
-  border-radius: ${({ theme }) => theme.radius.sm};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-`;
 
 const Amenities = styled.div`
   display: flex;
@@ -127,14 +120,6 @@ const PriceOwnerWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
-function BookingCard() {
-  return (
-    <BookingBox>
-      <button>Book now</button>
-    </BookingBox>
-  );
-}
 
 export default function VenueDetailPage() {
   const { id } = useParams();
