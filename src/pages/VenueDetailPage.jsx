@@ -3,18 +3,28 @@ import { useEffect, useState } from 'react';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
 import RatingBox from '../components/ui/RatingBox';
-
-const Amenities = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-`;
+import {
+  Fish,
+  FishOff,
+  Wifi,
+  WifiOff,
+  EggFried,
+  EggOff,
+  CircleParking,
+  CircleParkingOff,
+} from 'lucide-react';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
   padding: 1.5rem;
   border-radius: ${({ theme }) => theme.radius.sm};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+`;
+
+const Amenities = styled(BookingBox)`
+  display: flex;
+  gap: 1rem;
+  width: fit-content;
 `;
 
 const Grid = styled.div`
@@ -67,8 +77,21 @@ const Wrapper = styled.div`
   padding: 1.5rem;
 `;
 
-const OwnerText = styled.div`
-  fontsize: 0.9rem;
+const OwnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+const OwnerText = styled.span`
+  font-size: 1.6rem;
+  font-weight: 300;
+`;
+
+const OwnerImage = styled.img`
+  border-radius: 20px;
+  height: 2rem;
+  width: 2rem;
 `;
 
 function BookingCard() {
@@ -117,13 +140,16 @@ export default function VenueDetailPage() {
               {venue.location?.city}, {venue.location?.country}
             </Location>
           </div>
-          <OwnerText>{venue.owner?.name}</OwnerText>
+          <OwnerWrapper>
+            <OwnerImage src={venue.owner?.avatar.url} />
+            <OwnerText>Hosted by {venue.owner?.name}</OwnerText>
+          </OwnerWrapper>
           <RatingBox rating={venue.rating} />
           <Amenities>
-            {venue.meta?.wifi && <span>WiFi</span>}
-            {venue.meta?.parking && <span>Parking</span>}
-            {venue.meta?.breakfast && <span>Breakfast</span>}
-            {venue.meta?.pets && <span>Pets allowed</span>}
+            {venue.meta?.wifi ? <Wifi /> : <WifiOff />}
+            {venue.meta?.parking ? <CircleParking /> : <CircleParkingOff />}
+            {venue.meta?.breakfast ? <EggFried /> : <EggOff />}
+            {venue.meta?.pets ? <Fish /> : <FishOff />}
           </Amenities>
           <Description>{venue.description}</Description>
         </MainContent>
