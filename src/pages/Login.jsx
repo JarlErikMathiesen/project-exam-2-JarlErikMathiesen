@@ -1,15 +1,24 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { loginUser } from '../api/auth';
 import styled from 'styled-components';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log({ email, password });
+
+    try {
+      const data = await loginUser({ email, password });
+
+      localStorage.setItem('accessToken', data.accessToken);
+      console.log(data);
+    } catch (error) {
+      console.error('Login failed:', error);
+      alert('Invalid email or password');
+    }
   };
 
   return (
@@ -17,13 +26,14 @@ export default function Login() {
       <Card>
         <Title>Login</Title>
 
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <Input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+
           <Input
             type="password"
             placeholder="Password"
@@ -31,7 +41,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <SubmitButton onClick={handleSubmit}>Log in</SubmitButton>
+          <SubmitButton type="submit">Log in</SubmitButton>
 
           <RegisterText>
             Not registered?{' '}
@@ -67,7 +77,7 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;

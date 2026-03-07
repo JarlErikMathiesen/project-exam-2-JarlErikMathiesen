@@ -1,4 +1,4 @@
-const API_BASE = 'https://v2.api.noroff.dev/holidaze';
+const API_BASE = 'https://v2.api.noroff.dev';
 
 export async function apiFetch(endpoint, options = {}) {
   const token = localStorage.getItem('accessToken');
