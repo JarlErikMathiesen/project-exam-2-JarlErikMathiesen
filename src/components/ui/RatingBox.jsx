@@ -6,7 +6,7 @@ const RatingWrapper = styled.div`
   gap: 0.3rem;
 `;
 
-const StyledRatingBox = styled.div`
+const StyledRatingBox = styled.span`
   background: ${({ theme }) => theme.colors.primary};
   padding: 4px;
 
@@ -17,7 +17,9 @@ export default function RatingBox({ rating }) {
   return (
     <RatingWrapper>
       rating
-      <StyledRatingBox>{rating ?? '—'}</StyledRatingBox>
+      <StyledRatingBox>
+        {rating === 0 || !rating ? '—' : rating}
+      </StyledRatingBox>
     </RatingWrapper>
   );
 }

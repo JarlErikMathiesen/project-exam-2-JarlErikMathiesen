@@ -71,12 +71,6 @@ const PriceText = styled.p`
   margin-bottom: 0;
 `;
 
-/* const RatingBox = styled.div`
-  background: ${({ theme }) => theme.colors.primary};
-  padding: 4px;
-  color: ${({ theme }) => theme.colors.white};
-`; */
-
 const RightContent = styled.div`
   padding: 1rem;
   display: flex;
@@ -111,7 +105,7 @@ export default function VenueCard({ venue }) {
           </InfoRow>
         </LeftContent>
         <RightContent>
-          <RatingBox>{venue.rating || '—'}</RatingBox>
+          <RatingBox rating={venue.rating} />
           <div>
             <PriceText>per night</PriceText>
             <Price>{venue.price}£</Price>

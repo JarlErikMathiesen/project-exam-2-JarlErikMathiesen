@@ -39,7 +39,6 @@ const Grid = styled.div`
 const MainContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2rem;
 `;
 
 const Sidebar = styled.div`
@@ -84,7 +83,7 @@ const OwnerWrapper = styled.div`
 `;
 
 const OwnerText = styled.span`
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   font-weight: 300;
 `;
 
@@ -92,6 +91,31 @@ const OwnerImage = styled.img`
   border-radius: 20px;
   height: 2rem;
   width: 2rem;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const PriceRow = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PriceLabel = styled.span`
+  font-size: 0.85rem;
+`;
+
+const Price = styled.span`
+  font-size: 2rem;
+  font-weight: 600;
+`;
+
+const PriceOwnerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 function BookingCard() {
@@ -135,16 +159,26 @@ export default function VenueDetailPage() {
       <Grid>
         <MainContent>
           <div>
-            <Title>{venue.name}</Title>
+            <TitleWrapper>
+              <Title>{venue.name}</Title>
+              <RatingBox rating={venue.rating} />
+            </TitleWrapper>
+
             <Location>
               {venue.location?.city}, {venue.location?.country}
             </Location>
           </div>
-          <OwnerWrapper>
-            <OwnerImage src={venue.owner?.avatar.url} />
-            <OwnerText>Hosted by {venue.owner?.name}</OwnerText>
-          </OwnerWrapper>
-          <RatingBox rating={venue.rating} />
+          <PriceOwnerWrapper>
+            <PriceRow>
+              <PriceLabel>Per night</PriceLabel>
+              <Price>{venue.price}£</Price>
+            </PriceRow>
+            <OwnerWrapper>
+              <OwnerImage src={venue.owner?.avatar.url} />
+              <OwnerText>{venue.owner?.name}</OwnerText>
+            </OwnerWrapper>
+          </PriceOwnerWrapper>
+
           <Amenities>
             {venue.meta?.wifi ? <Wifi /> : <WifiOff />}
             {venue.meta?.parking ? <CircleParking /> : <CircleParkingOff />}
