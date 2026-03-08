@@ -18,7 +18,7 @@ export default function Login() {
       const data = await loginUser({ email, password });
       console.log(data);
 
-      login(data.accessToken);
+      login(data.accessToken, data.name);
       navigate('/profile');
     } catch (error) {
       console.error('Login failed:', error);

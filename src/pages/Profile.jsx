@@ -1,19 +1,20 @@
 import { useEffect } from 'react';
-import { getProfiles } from '../api/profiles';
+import { useAuth } from '../features/auth/useAuth';
+import { getProfile } from '../api/profiles';
 
 export default function Profile() {
+  const { name } = useAuth();
+
   useEffect(() => {
-    async function loadProfiles() {
-      try {
-        const data = await getProfiles();
-        console.log('Returned data:', data);
-      } catch (error) {
-        console.error(error);
-      }
+    async function loadProfile() {
+      const data = await getProfile(name);
+      console.log(data);
     }
 
-    loadProfiles();
-  }, []);
+    if (name) {
+      loadProfile();
+    }
+  }, [name]);
 
   return <h1>Profile Page</h1>;
 }

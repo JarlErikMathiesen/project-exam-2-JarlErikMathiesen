@@ -1,7 +1,5 @@
 import { apiFetch } from './client';
 
-export async function getProfiles() {
-  const data = await apiFetch('/holidaze/profiles');
-
-  return data;
+export function getProfile(name) {
+  return apiFetch(`/holidaze/profiles/${name}?_bookings=true&_venues=true`);
 }
