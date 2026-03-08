@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { registerUser } from '../api/auth';
 
 const Page = styled.div`
   min-height: 100vh;
@@ -92,22 +94,81 @@ const SubmitButton = styled.button`
 `;
 
 export default function Register() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    venueManager: false,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const body = {
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      venueManager: form.venueManager,
+    };
+
+    try {
+      const data = await registerUser(body);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Page>
       <Card>
         <Title>Register</Title>
 
         <Form>
-          <Input type="text" name="name" placeholder="Name" />
-          <Input type="email" name="email" placeholder="Email" />
-          <Input type="password" name="password" placeholder="Password" />
+          <Input
+            type="text"
+            name="name"
+            placeholder="Name"
+            value={form.name}
+            onChange={handleChange}
+          />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleChange}
+          />
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+          />
 
           <CheckboxRow>
-            <Checkbox type="checkbox" name="venueManager" id="venueManager" />
-            <CheckboxLabel>Register as manager</CheckboxLabel>
+            <Checkbox
+              type="checkbox"
+              name="venueManager"
+              id="venueManager"
+              checked={form.venueManager}
+              onChange={handleChange}
+            />
+            <CheckboxLabel htmlFor="venueManager">
+              Register as manager
+            </CheckboxLabel>
           </CheckboxRow>
 
-          <SubmitButton>Register</SubmitButton>
+          <SubmitButton onClick={handleSubmit}>Register</SubmitButton>
         </Form>
       </Card>
     </Page>
