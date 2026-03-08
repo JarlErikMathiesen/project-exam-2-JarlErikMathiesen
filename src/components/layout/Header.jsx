@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useAuth } from '../../features/auth/useAuth';
 
 const HeaderBar = styled.header`
   background: ${({ theme }) => theme.colors.primary};
@@ -39,14 +40,11 @@ const HeaderWrapper = styled.div`
 `;
 
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    !!localStorage.getItem('accessToken'),
-  );
+  const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    setIsLoggedIn(false);
+    logout();
     navigate('/');
   };
 

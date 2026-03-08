@@ -3,20 +3,22 @@ import { Link } from 'react-router-dom';
 import { loginUser } from '../api/auth';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../features/auth/useAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const data = await loginUser({ email, password });
-
-      localStorage.setItem('accessToken', data.accessToken);
       console.log(data);
+
+      login(data.accessToken);
       navigate('/profile');
     } catch (error) {
       console.error('Login failed:', error);
