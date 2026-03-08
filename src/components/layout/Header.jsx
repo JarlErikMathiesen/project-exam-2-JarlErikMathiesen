@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const HeaderBar = styled.header`
   background: ${({ theme }) => theme.colors.primary};
@@ -30,16 +32,34 @@ const HeaderLink = styled(Link)`
   }
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`;
+
 export default function Header() {
-  const isLoggedIn = localStorage.getItem('accessToken');
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem('accessToken'),
+  );
+  const navigate = useNavigate();
+
+  const HandleLogout = () => {
+    localStorage.removeItem('accessToken');
+    setIsLoggedIn(false);
+    navigate('/');
+  };
 
   return (
     <HeaderBar>
       <Logo to="/">HOLIDAZE</Logo>
       {isLoggedIn ? (
-        <HeaderLink to="/profile">
-          <User size={24} />
-        </HeaderLink>
+        <HeaderWrapper>
+          <HeaderLink to="/profile">
+            <User size={24} />
+          </HeaderLink>
+          <HeaderLink onClick={HandleLogout}>Logout</HeaderLink>
+        </HeaderWrapper>
       ) : (
         <HeaderLink to="/login">Log in</HeaderLink>
       )}
