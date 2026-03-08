@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useAuth } from '../../features/auth/useAuth';
 
 const HeaderBar = styled.header`

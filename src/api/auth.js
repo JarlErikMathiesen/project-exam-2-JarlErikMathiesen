@@ -8,3 +8,12 @@ export async function loginUser(credentials) {
 
   return data.data;
 }
+
+export async function registerUser(body) {
+  const data = await apiFetch('/auth/register', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+
+  return data.data;
+}
