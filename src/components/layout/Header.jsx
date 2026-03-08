@@ -44,7 +44,7 @@ export default function Header() {
   );
   const navigate = useNavigate();
 
-  const HandleLogout = () => {
+  const handleLogout = () => {
     localStorage.removeItem('accessToken');
     setIsLoggedIn(false);
     navigate('/');
@@ -58,7 +58,7 @@ export default function Header() {
           <HeaderLink to="/profile">
             <User size={24} />
           </HeaderLink>
-          <HeaderLink onClick={HandleLogout}>Logout</HeaderLink>
+          <HeaderLink onClick={handleLogout}>Logout</HeaderLink>
         </HeaderWrapper>
       ) : (
         <HeaderLink to="/login">Log in</HeaderLink>

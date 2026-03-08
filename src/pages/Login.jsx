@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loginUser } from '../api/auth';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ export default function Login() {
 
       localStorage.setItem('accessToken', data.accessToken);
       console.log(data);
+      navigate('/profile');
     } catch (error) {
       console.error('Login failed:', error);
       alert('Invalid email or password');
