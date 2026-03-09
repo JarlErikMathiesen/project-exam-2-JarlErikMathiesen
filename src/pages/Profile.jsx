@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../features/auth/useAuth';
-import { getProfile } from '../api/profiles';
+import { getProfile, updateProfileAvatar } from '../api/profiles';
 
 export default function Profile() {
   const { name } = useAuth();
   const [profile, setProfile] = useState(null);
+  const [showInput, setShowInput] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('');
 
   useEffect(() => {
     async function loadProfile() {
@@ -23,14 +25,47 @@ export default function Profile() {
 
   if (!profile) return <p>Loading...</p>;
 
+  const handleAvatarSubmit = async () => {
+    const body = {
+      avatar: {
+        url: avatarUrl,
+        alt: 'User avatar',
+      },
+    };
+
+    console.log('body:', body);
+
+    try {
+      const updatedProfile = await updateProfileAvatar(name, body);
+
+      setProfile(updatedProfile);
+      setShowInput(false);
+      setAvatarUrl('');
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Page>
       <Title>Profile</Title>
 
       <Avatar src={profile.avatar?.url} alt={profile.name} />
 
-      <AvatarButton>Change Avatar</AvatarButton>
+      <AvatarButton onClick={() => setShowInput(!showInput)}>
+        Change Avatar
+      </AvatarButton>
+      {showInput && (
+        <>
+          <AvatarInput
+            type="text"
+            placeholder="Enter new avatar URL..."
+            value={avatarUrl}
+            onChange={(e) => setAvatarUrl(e.target.value)}
+          />
 
+          <SubmitButton onClick={handleAvatarSubmit}>Submit</SubmitButton>
+        </>
+      )}
       <InfoBox>
         <InfoRow>
           <Label>Name</Label>
@@ -80,6 +115,17 @@ const AvatarButton = styled.button`
   &:hover {
     opacity: 0.9;
   }
+`;
+
+const AvatarInput = styled.input`
+  width: 250px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const SubmitButton = styled.button`
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
 `;
 
 const InfoBox = styled.div`
