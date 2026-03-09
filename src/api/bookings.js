@@ -1,3 +1,5 @@
+import { apiFetch } from './client';
+
 export const createBooking = async (bookingData) => {
   const data = await apiFetch('/holidaze/bookings', {
     method: 'POST',

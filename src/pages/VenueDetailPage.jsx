@@ -196,7 +196,7 @@ export default function VenueDetailPage() {
         </MainContent>
 
         <Sidebar>
-          <BookingCard />
+          <BookingCard venue={venue} />
         </Sidebar>
       </Grid>
     </Wrapper>

@@ -10,7 +10,7 @@ const BookingBox = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 `;
 
-export default function BookingCard() {
+export default function BookingCard({ venue }) {
   const { isLoggedIn } = useAuth();
 
   function BookVenue() {
@@ -18,10 +18,24 @@ export default function BookingCard() {
     const [dateTo, setDateTo] = useState('');
     const [guests, setGuests] = useState(1);
 
-    function handleTestBooking() {
-      console.log(dateFrom);
-      console.log(dateTo);
-      console.log(guests);
+    async function handleBooking() {
+      const bookingData = {
+        dateFrom,
+        dateTo,
+        guests: Number(guests),
+        venueId: venue.id,
+      };
+
+      if (!dateFrom || !dateTo) {
+        alert('Please select dates');
+        return;
+      }
+      try {
+        const booking = await createBooking(bookingData);
+        console.log('Booking created:', booking);
+      } catch (error) {
+        console.error('Booking failed:', error);
+      }
     }
     return (
       <div>
@@ -39,10 +53,11 @@ export default function BookingCard() {
 
         <input
           type="number"
+          max={venue.maxGuests}
           value={guests}
           onChange={(e) => setGuests(e.target.value)}
         />
-        <button onClick={handleTestBooking}>Test booking</button>
+        <button onClick={handleBooking}>Test booking</button>
       </div>
     );
   }
