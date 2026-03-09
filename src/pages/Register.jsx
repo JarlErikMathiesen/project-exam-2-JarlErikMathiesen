@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { registerUser } from '../api/auth';
+import Input from '../components/ui/Input';
+import Button from '../components/ui/Button';
 
 const Page = styled.div`
   min-height: 100vh;
@@ -33,7 +35,7 @@ const Form = styled.div`
   gap: 10px;
 `;
 
-const Input = styled.input`
+/* const Input = styled.input`
   width: 100%;
   padding: 10px 14px;
   font-size: 14px;
@@ -52,7 +54,7 @@ const Input = styled.input`
   &:focus {
     border-color: ${({ theme }) => theme.colors.primary};
   }
-`;
+`; */
 
 const CheckboxRow = styled.div`
   display: flex;
@@ -77,7 +79,7 @@ const CheckboxLabel = styled.label`
   cursor: pointer;
 `;
 
-const SubmitButton = styled.button`
+/* const SubmitButton = styled.button`
   width: 100%;
   padding: 12px;
   margin-top: 6px;
@@ -91,7 +93,7 @@ const SubmitButton = styled.button`
   &:hover {
     opacity: 0.9;
   }
-`;
+`; */
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -168,7 +170,7 @@ export default function Register() {
             </CheckboxLabel>
           </CheckboxRow>
 
-          <SubmitButton onClick={handleSubmit}>Register</SubmitButton>
+          <Button onClick={handleSubmit}>Register</Button>
         </Form>
       </Card>
     </Page>

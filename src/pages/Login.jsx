@@ -4,6 +4,8 @@ import { loginUser } from '../api/auth';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../features/auth/useAuth';
+import Input from '../components/ui/Input';
+import Button from '../components/ui/Button';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -46,7 +48,7 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
-          <SubmitButton type="submit">Log in</SubmitButton>
+          <Button type="submit">Log in</Button>
 
           <RegisterText>
             Not registered?{' '}
@@ -89,7 +91,7 @@ const Form = styled.form`
   gap: 10px;
 `;
 
-const Input = styled.input`
+/* const Input = styled.input`
   width: 100%;
   padding: 10px 14px;
   font-size: 14px;
@@ -123,7 +125,7 @@ const SubmitButton = styled.button`
   &:hover {
     opacity: 0.9;
   }
-`;
+`; */
 
 const RegisterText = styled.p`
   text-align: center;

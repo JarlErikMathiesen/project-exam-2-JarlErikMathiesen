@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../features/auth/useAuth';
 import { getProfile, updateProfileAvatar } from '../api/profiles';
+import Input from '../components/ui/Input';
+import Button from '../components/ui/Button';
 
 export default function Profile() {
   const { name } = useAuth();
@@ -50,22 +52,21 @@ export default function Profile() {
       <Title>Profile</Title>
 
       <Avatar src={profile.avatar?.url} alt={profile.name} />
+      <AvatarButtons>
+        <Button onClick={() => setShowInput(!showInput)}>Change Avatar</Button>
+        {showInput && (
+          <>
+            <Input
+              type="text"
+              placeholder="Enter new avatar URL..."
+              value={avatarUrl}
+              onChange={(e) => setAvatarUrl(e.target.value)}
+            />
 
-      <AvatarButton onClick={() => setShowInput(!showInput)}>
-        Change Avatar
-      </AvatarButton>
-      {showInput && (
-        <>
-          <AvatarInput
-            type="text"
-            placeholder="Enter new avatar URL..."
-            value={avatarUrl}
-            onChange={(e) => setAvatarUrl(e.target.value)}
-          />
-
-          <SubmitButton onClick={handleAvatarSubmit}>Submit</SubmitButton>
-        </>
-      )}
+            <Button onClick={handleAvatarSubmit}>Submit</Button>
+          </>
+        )}
+      </AvatarButtons>
       <InfoBox>
         <InfoRow>
           <Label>Name</Label>
@@ -102,30 +103,12 @@ const Avatar = styled.img`
   margin-bottom: 1rem;
 `;
 
-const AvatarButton = styled.button`
-  background: #2f4f46;
-  color: white;
-  border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.9;
-  }
-`;
-
-const AvatarInput = styled.input`
+const AvatarButtons = styled.div`
+  flex-direction: column;
+  display: flex;
+  gap: 20px;
+  margin: 20px;
   width: 250px;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-`;
-
-const SubmitButton = styled.button`
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
 `;
 
 const InfoBox = styled.div`
