@@ -35,27 +35,6 @@ const Form = styled.div`
   gap: 10px;
 `;
 
-/* const Input = styled.input`
-  width: 100%;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: ${({ theme }) => theme.font.family};
-  color: ${({ theme }) => theme.colors.text};
-  background-color: ${({ theme }) => theme.colors.white};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: ${({ theme }) => theme.radius.sm};
-  outline: none;
-  text-align: center;
-
-  &::placeholder {
-    color: #aaa;
-  }
-
-  &:focus {
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-`; */
-
 const CheckboxRow = styled.div`
   display: flex;
   align-items: center;
@@ -78,22 +57,6 @@ const CheckboxLabel = styled.label`
   color: ${({ theme }) => theme.colors.text};
   cursor: pointer;
 `;
-
-/* const SubmitButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.white};
-  background-color: ${({ theme }) => theme.colors.primary};
-  border: none;
-  border-radius: ${({ theme }) => theme.radius.sm};
-
-  &:hover {
-    opacity: 0.9;
-  }
-`; */
 
 export default function Register() {
   const [form, setForm] = useState({
