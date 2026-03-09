@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAuth } from '../../features/auth/useAuth';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -8,9 +9,10 @@ const BookingBox = styled.div`
 `;
 
 export default function BookingCard() {
+  const { isLoggedIn } = useAuth();
   return (
     <BookingBox>
-      <button>Book now</button>
+      {isLoggedIn ? <button>Book now</button> : <div>log in to book</div>}
     </BookingBox>
   );
 }
