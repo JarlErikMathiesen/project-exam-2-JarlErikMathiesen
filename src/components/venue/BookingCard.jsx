@@ -21,7 +21,13 @@ export default function BookingCard({ venue, bookings }) {
     end: new Date(booking.dateTo),
   }));
 
-  console.log(bookedRanges[0]);
+  function isDateBooked(date) {
+    return bookedRanges.some(
+      (booking) => date >= booking.start && date <= booking.end,
+    );
+  }
+  console.log(isDateBooked(new Date('2028-12-02')));
+  console.log(isDateBooked(new Date('2025-12-02')));
 
   async function handleBooking() {
     const bookingData = {
