@@ -80,9 +80,21 @@ export default function Profile() {
       </InfoBox>
 
       <BookingsTitle>My bookings</BookingsTitle>
+      <div>
+        <img src={profile.bookings[0].venue.media?.[0]?.url} />
+        <h2>{profile.bookings[0].venue.name}</h2>
+        <BookingDates>
+          <p>from: {profile.bookings[0].dateFrom}</p>
+          <p>to: {profile.bookings[0].dateTo}</p>
+        </BookingDates>
+      </div>
     </Page>
   );
 }
+
+const BookingDates = styled.div`
+  display: flex;
+`;
 
 const Page = styled.div`
   display: flex;
