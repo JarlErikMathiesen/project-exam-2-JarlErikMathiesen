@@ -145,39 +145,51 @@ export default function VenueDetailPage() {
   if (loading) return <p>Loading...</p>;
   if (!venue) return <p>Venue not found</p>;
 
+  const {
+    name,
+    media,
+    location,
+    price,
+    owner,
+    meta,
+    rating,
+    description,
+    bookings,
+  } = venue;
+
   return (
     <Wrapper>
       <Gallery>
-        <MainImage src={venue.media?.[0]?.url} alt={venue.name} />
+        <MainImage src={media?.[0]?.url} alt={name} />
       </Gallery>
 
       <Grid>
         <MainContent>
           <div>
             <TitleWrapper>
-              <Title>{venue.name}</Title>
-              <RatingBox rating={venue.rating} />
+              <Title>{name}</Title>
+              <RatingBox rating={rating} />
             </TitleWrapper>
 
             <Location>
-              {venue.location?.city}, {venue.location?.country}
+              {location?.city}, {location?.country}
             </Location>
           </div>
           <PriceOwnerWrapper>
             <PriceRow>
               <PriceLabel>Per night</PriceLabel>
-              <Price>{venue.price}£</Price>
+              <Price>{price}£</Price>
             </PriceRow>
             <OwnerWrapper>
-              <OwnerImage src={venue.owner?.avatar.url} />
-              <OwnerText>{venue.owner?.name}</OwnerText>
+              <OwnerImage src={owner?.avatar.url} />
+              <OwnerText>{owner?.name}</OwnerText>
             </OwnerWrapper>
           </PriceOwnerWrapper>
 
           <Amenities>
             {amenities.map(
               ({ key, trueLabel, falseLabel, TrueIcon, FalseIcon }) => {
-                const available = venue.meta?.[key];
+                const available = meta?.[key];
                 const Icon = available ? TrueIcon : FalseIcon;
                 const label = available ? trueLabel : falseLabel;
                 return (
@@ -192,11 +204,11 @@ export default function VenueDetailPage() {
               },
             )}
           </Amenities>
-          <Description>{venue.description}</Description>
+          <Description>{description}</Description>
         </MainContent>
 
         <Sidebar>
-          <BookingCard venue={venue} />
+          <BookingCard venue={venue} bookings={bookings} />
         </Sidebar>
       </Grid>
     </Wrapper>

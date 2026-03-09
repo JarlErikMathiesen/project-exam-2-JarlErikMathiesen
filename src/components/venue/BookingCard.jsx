@@ -10,61 +10,70 @@ const BookingBox = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 `;
 
-export default function BookingCard({ venue }) {
+export default function BookingCard({ venue, bookings }) {
   const { isLoggedIn } = useAuth();
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [guests, setGuests] = useState(1);
 
-  function BookVenue() {
-    const [dateFrom, setDateFrom] = useState('');
-    const [dateTo, setDateTo] = useState('');
-    const [guests, setGuests] = useState(1);
+  const bookedRanges = bookings.map((booking) => ({
+    start: new Date(booking.dateFrom),
+    end: new Date(booking.dateTo),
+  }));
 
-    async function handleBooking() {
-      const bookingData = {
-        dateFrom,
-        dateTo,
-        guests: Number(guests),
-        venueId: venue.id,
-      };
+  console.log(bookedRanges[0]);
 
-      if (!dateFrom || !dateTo) {
-        alert('Please select dates');
-        return;
-      }
-      try {
-        const booking = await createBooking(bookingData);
-        console.log('Booking created:', booking);
-      } catch (error) {
-        console.error('Booking failed:', error);
-      }
+  async function handleBooking() {
+    const bookingData = {
+      dateFrom,
+      dateTo,
+      guests: Number(guests),
+      venueId: venue.id,
+    };
+
+    if (!dateFrom || !dateTo) {
+      alert('Please select dates');
+      return;
     }
+
+    try {
+      const booking = await createBooking(bookingData);
+      console.log('Booking created:', booking);
+    } catch (error) {
+      console.error('Booking failed:', error);
+    }
+  }
+
+  if (!isLoggedIn) {
     return (
-      <div>
-        <input
-          type="date"
-          value={dateFrom}
-          onChange={(e) => setDateFrom(e.target.value)}
-        />
-
-        <input
-          type="date"
-          value={dateTo}
-          onChange={(e) => setDateTo(e.target.value)}
-        />
-
-        <input
-          type="number"
-          max={venue.maxGuests}
-          value={guests}
-          onChange={(e) => setGuests(e.target.value)}
-        />
-        <button onClick={handleBooking}>Test booking</button>
-      </div>
+      <BookingBox>
+        <div>Log in to book</div>
+      </BookingBox>
     );
   }
 
   return (
     <BookingBox>
-      {isLoggedIn ? <BookVenue /> : <div>log in to book</div>}
+      <input
+        type="date"
+        value={dateFrom}
+        onChange={(e) => setDateFrom(e.target.value)}
+      />
+
+      <input
+        type="date"
+        value={dateTo}
+        onChange={(e) => setDateTo(e.target.value)}
+      />
+
+      <input
+        type="number"
+        max={venue.maxGuests}
+        value={guests}
+        onChange={(e) => setGuests(e.target.value)}
+      />
+
+      <button onClick={handleBooking}>Test booking</button>
     </BookingBox>
   );
 }

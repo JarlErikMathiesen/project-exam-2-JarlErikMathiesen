@@ -6,7 +6,9 @@ export const getVenues = async () => {
 };
 
 export const getVenueById = async (id) => {
-  const data = await apiFetch(`/holidaze/venues/${id}?_owner=true`);
+  const data = await apiFetch(
+    `/holidaze/venues/${id}?_owner=true&_bookings=true`,
+  );
   return data.data;
 };
 
