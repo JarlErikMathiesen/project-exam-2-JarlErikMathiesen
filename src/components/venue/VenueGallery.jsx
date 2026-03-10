@@ -5,16 +5,22 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const Wrapper = styled.div`
   display: grid;
   gap: 0.5rem;
+  height: 350px;
+  margin-bottom: 35px;
 
   @media (min-width: 768px) {
     grid-template-columns: 3fr 1fr;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 3fr 2fr;
   }
 `;
 
 const MainImageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 350px;
+  height: 100%;
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radius.lg};
 `;
@@ -23,6 +29,40 @@ const MainImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+const ThumbnailGrid = styled.div`
+  display: none;
+  min-height: 0;
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+  }
+`;
+
+const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 0;
+  border-radius: ${({ theme }) => theme.radius.sm};
+  cursor: pointer;
+
+  opacity: ${({ active }) => (active ? 1 : 0.7)};
+
+  @media (max-width: 1199px) {
+    &:nth-child(n + 3) {
+      display: none;
+    }
+  }
 `;
 
 const Arrow = styled.button`
@@ -44,9 +84,11 @@ const Arrow = styled.button`
 `;
 
 export default function VenueGallery({ media, name }) {
-  const images = media?.map((m) => m.url) || [];
+  const images =
+    media?.length > 0
+      ? media.map((m) => m.url)
+      : ['https://placehold.co/800x600'];
   const [index, setIndex] = useState(0);
-
   if (images.length === 0) return null;
 
   function next() {
@@ -70,6 +112,21 @@ export default function VenueGallery({ media, name }) {
           <ChevronRight size={20} />
         </Arrow>
       </MainImageWrapper>
+
+      <ThumbnailGrid>
+        {images.slice(1, 5).map((img, i) => {
+          const realIndex = i + 1;
+
+          return (
+            <Thumbnail
+              key={realIndex}
+              src={img}
+              active={realIndex === index}
+              onClick={() => setIndex(realIndex)}
+            />
+          );
+        })}
+      </ThumbnailGrid>
     </Wrapper>
   );
 }

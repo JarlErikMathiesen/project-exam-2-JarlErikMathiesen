@@ -68,7 +68,7 @@ const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0
+  gap: 0;
   width: 100%;
   min-width: 0;
 `;
