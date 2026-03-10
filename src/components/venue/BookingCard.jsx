@@ -13,6 +13,12 @@ const BookingBox = styled.div`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 `;
 
+const GuestWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 export default function BookingCard({ venue, bookings }) {
   const { isLoggedIn } = useAuth();
   const [dateFrom, setDateFrom] = useState();
@@ -90,18 +96,20 @@ export default function BookingCard({ venue, bookings }) {
   return (
     <>
       <BookingBox>
-        <label>
-          Guests (max {venue.maxGuests})
-          <Input
-            type="number"
-            min={1}
-            max={venue.maxGuests}
-            value={guests}
-            onChange={handleGuestChange}
-          />
-        </label>
+        <GuestWrapper>
+          <label>
+            Guests (max {venue.maxGuests})
+            <Input
+              type="number"
+              min={1}
+              max={venue.maxGuests}
+              value={guests}
+              onChange={handleGuestChange}
+            />
+          </label>
+          <Button onClick={handleBooking}>Book</Button>
+        </GuestWrapper>
 
-        <Button onClick={handleBooking}>Book</Button>
         <BookingCalendar
           dateFrom={dateFrom}
           dateTo={dateTo}
