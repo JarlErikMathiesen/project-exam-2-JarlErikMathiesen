@@ -19,28 +19,41 @@ export default function BookingCard({ venue, bookings }) {
   const bookedRanges = bookings.map((booking) => ({
     start: new Date(booking.dateFrom),
     end: new Date(booking.dateTo),
+    created: booking.created,
   }));
 
-  function isDateBooked(date) {
-    return bookedRanges.some(
-      (booking) => date >= booking.start && date <= booking.end,
-    );
+  console.log(bookedRanges);
+
+  function isDateRangeBooked(startDate, endDate) {
+    return bookedRanges.some((booking) => {
+      return startDate < booking.end && endDate > booking.start;
+    });
   }
-  console.log(isDateBooked(new Date('2028-12-02')));
-  console.log(isDateBooked(new Date('2025-12-02')));
 
   async function handleBooking() {
+    if (!dateFrom || !dateTo) {
+      alert('Please select dates');
+      return;
+    }
+
+    const start = new Date(dateFrom);
+    const end = new Date(dateTo);
+
+    if (isDateRangeBooked(start, end)) {
+      alert('These dates are already booked');
+      return;
+    }
+    if (end <= start) {
+      alert('Check-out must be after check-in');
+      return;
+    }
+
     const bookingData = {
       dateFrom,
       dateTo,
       guests: Number(guests),
       venueId: venue.id,
     };
-
-    if (!dateFrom || !dateTo) {
-      alert('Please select dates');
-      return;
-    }
 
     try {
       const booking = await createBooking(bookingData);
