@@ -3,6 +3,8 @@ import { useAuth } from '../../features/auth/useAuth';
 import { useState } from 'react';
 import { createBooking } from '../../api/bookings';
 import BookingCalendar from './BookingCalendar';
+import Input from '../ui/Input';
+import Button from '../ui/Button';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -33,9 +35,20 @@ export default function BookingCard({ venue, bookings }) {
     });
   }
 
+  function handleGuestChange(e) {
+    const value = Number(e.target.value);
+
+    const clamped = Math.min(Math.max(value, 1), venue.maxGuests);
+
+    setGuests(clamped);
+  }
   async function handleBooking() {
     if (!dateFrom || !dateTo) {
       alert('Please select dates');
+      return;
+    }
+    if (guests > venue.maxGuests) {
+      alert(`Maximum ${venue.maxGuests} guests allowed`);
       return;
     }
 
@@ -77,15 +90,18 @@ export default function BookingCard({ venue, bookings }) {
   return (
     <>
       <BookingBox>
-        <input
-          type="number"
-          max={venue.maxGuests}
-          value={guests}
-          label="guests"
-          onChange={(e) => setGuests(e.target.value)}
-        />
+        <label>
+          Guests (max {venue.maxGuests})
+          <Input
+            type="number"
+            min={1}
+            max={venue.maxGuests}
+            value={guests}
+            onChange={handleGuestChange}
+          />
+        </label>
 
-        <button onClick={handleBooking}>Test booking</button>
+        <Button onClick={handleBooking}>Book</Button>
         <BookingCalendar
           dateFrom={dateFrom}
           dateTo={dateTo}
