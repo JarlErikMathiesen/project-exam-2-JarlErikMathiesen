@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import RatingBox from '../components/ui/RatingBox';
 import BookingCard from '../components/venue/BookingCard';
 import { amenities } from '../utils/amenities';
+import VenueGallery from '../components/venue/VenueGallery';
 
 const Amenities = styled.div`
   display: flex;
@@ -41,7 +42,7 @@ const Sidebar = styled.div`
   }
 `;
 
-const Gallery = styled.div`
+/* const Gallery = styled.div`
   width: 100%;
   height: 350px;
   overflow: hidden;
@@ -52,7 +53,7 @@ const MainImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`;
+`; */
 
 const Title = styled.h1`
   margin: 0;
@@ -159,9 +160,7 @@ export default function VenueDetailPage() {
 
   return (
     <Wrapper>
-      <Gallery>
-        <MainImage src={media?.[0]?.url} alt={name} />
-      </Gallery>
+      <VenueGallery media={media} name={name} />
 
       <Grid>
         <MainContent>

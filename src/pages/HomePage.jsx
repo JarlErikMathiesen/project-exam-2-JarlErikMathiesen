@@ -26,7 +26,11 @@ export default function HomePage() {
       try {
         const data = await getVenues();
         setVenues(data);
-        console.log(data);
+        data.forEach((venue) => {
+          if (venue.media.length > 1) {
+            console.log(`(${venue.name})${venue.media.length}`);
+          }
+        });
       } catch (err) {
         console.error(err);
         setError('Failed to load venues');
