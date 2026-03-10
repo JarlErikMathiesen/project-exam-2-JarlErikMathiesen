@@ -17,17 +17,19 @@ export default function BookingCard({ venue, bookings }) {
   const [dateTo, setDateTo] = useState();
   const [guests, setGuests] = useState(1);
 
-  const disabledRanges = bookings.map((booking) => ({
-    from: new Date(booking.dateFrom),
-    to: new Date(booking.dateTo),
-    created: booking.created,
-  }));
+  const disabledRanges = [
+    { before: new Date() },
+    ...bookings.map((booking) => ({
+      from: new Date(booking.dateFrom),
+      to: new Date(booking.dateTo),
+    })),
+  ];
 
   console.log(disabledRanges);
 
   function isDateRangeBooked(startDate, endDate) {
     return disabledRanges.some((booking) => {
-      return startDate < booking.end && endDate > booking.start;
+      return startDate < booking.to && endDate > booking.from;
     });
   }
 
