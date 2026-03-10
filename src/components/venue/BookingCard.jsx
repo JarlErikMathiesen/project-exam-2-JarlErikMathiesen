@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useAuth } from '../../features/auth/useAuth';
 import { useState } from 'react';
 import { createBooking } from '../../api/bookings';
+import BookingCalendar from './BookingCalendar';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -16,13 +17,12 @@ export default function BookingCard({ venue, bookings }) {
   const [dateTo, setDateTo] = useState('');
   const [guests, setGuests] = useState(1);
 
-  const bookedRanges = bookings.map((booking) => ({
-    start: new Date(booking.dateFrom),
-    end: new Date(booking.dateTo),
-    created: booking.created,
+  const disabledRanges = bookings.map((booking) => ({
+    from: new Date(booking.dateFrom),
+    to: new Date(booking.dateTo),
   }));
 
-  console.log(bookedRanges);
+  console.log(disabledRanges);
 
   function isDateRangeBooked(startDate, endDate) {
     return bookedRanges.some((booking) => {
@@ -72,27 +72,30 @@ export default function BookingCard({ venue, bookings }) {
   }
 
   return (
-    <BookingBox>
-      <input
-        type="date"
-        value={dateFrom}
-        onChange={(e) => setDateFrom(e.target.value)}
-      />
+    <>
+      <BookingBox>
+        <input
+          type="date"
+          value={dateFrom}
+          onChange={(e) => setDateFrom(e.target.value)}
+        />
 
-      <input
-        type="date"
-        value={dateTo}
-        onChange={(e) => setDateTo(e.target.value)}
-      />
+        <input
+          type="date"
+          value={dateTo}
+          onChange={(e) => setDateTo(e.target.value)}
+        />
 
-      <input
-        type="number"
-        max={venue.maxGuests}
-        value={guests}
-        onChange={(e) => setGuests(e.target.value)}
-      />
+        <input
+          type="number"
+          max={venue.maxGuests}
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+        />
 
-      <button onClick={handleBooking}>Test booking</button>
-    </BookingBox>
+        <button onClick={handleBooking}>Test booking</button>
+      </BookingBox>
+      <BookingCalendar />
+    </>
   );
 }
