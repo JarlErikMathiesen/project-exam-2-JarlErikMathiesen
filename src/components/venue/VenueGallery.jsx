@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -36,6 +37,7 @@ const Arrow = styled.button`
 
   ${({ left }) => left && 'left: 10px;'}
   ${({ right }) => right && 'right: 10px;'}
+
   @media (min-width: 768px) {
     display: none;
   }
@@ -43,17 +45,28 @@ const Arrow = styled.button`
 
 export default function VenueGallery({ media, name }) {
   const images = media?.map((m) => m.url) || [];
+  const [index, setIndex] = useState(0);
+
+  if (images.length === 0) return null;
+
+  function next() {
+    setIndex((prev) => (prev + 1) % images.length);
+  }
+
+  function prev() {
+    setIndex((prev) => (prev - 1 + images.length) % images.length);
+  }
 
   return (
     <Wrapper>
       <MainImageWrapper>
-        <MainImage src={images[0]} alt={name} />
+        <MainImage src={images[index]} alt={name} />
 
-        <Arrow left>
+        <Arrow left onClick={prev}>
           <ChevronLeft size={20} />
         </Arrow>
 
-        <Arrow right>
+        <Arrow right onClick={next}>
           <ChevronRight size={20} />
         </Arrow>
       </MainImageWrapper>
