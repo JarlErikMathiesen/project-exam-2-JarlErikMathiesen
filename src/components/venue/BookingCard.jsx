@@ -5,6 +5,7 @@ import { createBooking } from '../../api/bookings';
 import BookingCalendar from './BookingCalendar';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import BookingPrice from './BookingPrice';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -94,30 +95,30 @@ export default function BookingCard({ venue, bookings }) {
   }
 
   return (
-    <>
-      <BookingBox>
-        <GuestWrapper>
-          <label>
-            Guests (max {venue.maxGuests})
-            <Input
-              type="number"
-              min={1}
-              max={venue.maxGuests}
-              value={guests}
-              onChange={handleGuestChange}
-            />
-          </label>
-          <Button onClick={handleBooking}>Book</Button>
-        </GuestWrapper>
+    <BookingBox>
+      <GuestWrapper>
+        <label>Guests (max {venue.maxGuests})</label>
 
-        <BookingCalendar
-          dateFrom={dateFrom}
-          dateTo={dateTo}
-          setDateFrom={setDateFrom}
-          setDateTo={setDateTo}
-          disabledRanges={disabledRanges}
+        <Input
+          type="number"
+          min={1}
+          max={venue.maxGuests}
+          value={guests}
+          onChange={handleGuestChange}
         />
-      </BookingBox>
-    </>
+      </GuestWrapper>
+
+      <BookingCalendar
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        setDateFrom={setDateFrom}
+        setDateTo={setDateTo}
+        disabledRanges={disabledRanges}
+      />
+
+      <BookingPrice dateFrom={dateFrom} dateTo={dateTo} price={venue.price} />
+
+      <Button onClick={handleBooking}>Book</Button>
+    </BookingBox>
   );
 }
