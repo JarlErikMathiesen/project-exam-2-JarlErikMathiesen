@@ -17,12 +17,13 @@ export default function BookingCard({ venue, bookings }) {
   const [dateTo, setDateTo] = useState('');
   const [guests, setGuests] = useState(1);
 
-  const disabledRanges = bookings.map((booking) => ({
+  const bookedRanges = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
     to: new Date(booking.dateTo),
+    created: booking.created,
   }));
 
-  console.log(disabledRanges);
+  console.log(bookedRanges);
 
   function isDateRangeBooked(startDate, endDate) {
     return bookedRanges.some((booking) => {
@@ -95,7 +96,12 @@ export default function BookingCard({ venue, bookings }) {
 
         <button onClick={handleBooking}>Test booking</button>
       </BookingBox>
-      <BookingCalendar />
+      <BookingCalendar
+        dateFrom={dateFrom}
+        dateTo={dateTo}
+        setDateFrom={setDateFrom}
+        setDateTo={setDateTo}
+      />
     </>
   );
 }
