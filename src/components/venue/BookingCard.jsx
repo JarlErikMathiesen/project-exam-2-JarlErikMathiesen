@@ -13,20 +13,20 @@ const BookingBox = styled.div`
 
 export default function BookingCard({ venue, bookings }) {
   const { isLoggedIn } = useAuth();
-  const [dateFrom, setDateFrom] = useState('');
-  const [dateTo, setDateTo] = useState('');
+  const [dateFrom, setDateFrom] = useState();
+  const [dateTo, setDateTo] = useState();
   const [guests, setGuests] = useState(1);
 
-  const bookedRanges = bookings.map((booking) => ({
+  const disabledRanges = bookings.map((booking) => ({
     from: new Date(booking.dateFrom),
     to: new Date(booking.dateTo),
     created: booking.created,
   }));
 
-  console.log(bookedRanges);
+  console.log(disabledRanges);
 
   function isDateRangeBooked(startDate, endDate) {
-    return bookedRanges.some((booking) => {
+    return disabledRanges.some((booking) => {
       return startDate < booking.end && endDate > booking.start;
     });
   }
@@ -50,8 +50,8 @@ export default function BookingCard({ venue, bookings }) {
     }
 
     const bookingData = {
-      dateFrom,
-      dateTo,
+      dateFrom: dateFrom.toISOString(),
+      dateTo: dateTo.toISOString(),
       guests: Number(guests),
       venueId: venue.id,
     };
@@ -76,32 +76,22 @@ export default function BookingCard({ venue, bookings }) {
     <>
       <BookingBox>
         <input
-          type="date"
-          value={dateFrom}
-          onChange={(e) => setDateFrom(e.target.value)}
-        />
-
-        <input
-          type="date"
-          value={dateTo}
-          onChange={(e) => setDateTo(e.target.value)}
-        />
-
-        <input
           type="number"
           max={venue.maxGuests}
           value={guests}
+          label="guests"
           onChange={(e) => setGuests(e.target.value)}
         />
 
         <button onClick={handleBooking}>Test booking</button>
+        <BookingCalendar
+          dateFrom={dateFrom}
+          dateTo={dateTo}
+          setDateFrom={setDateFrom}
+          setDateTo={setDateTo}
+          disabledRanges={disabledRanges}
+        />
       </BookingBox>
-      <BookingCalendar
-        dateFrom={dateFrom}
-        dateTo={dateTo}
-        setDateFrom={setDateFrom}
-        setDateTo={setDateTo}
-      />
     </>
   );
 }
