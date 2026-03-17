@@ -40,7 +40,7 @@ export default function Profile() {
     try {
       const updatedProfile = await updateProfileAvatar(name, body);
 
-      setProfile(updatedProfile);
+      setProfile((prev) => ({ ...prev, ...updatedProfile }));
       setShowInput(false);
       setAvatarUrl('');
     } catch (error) {
