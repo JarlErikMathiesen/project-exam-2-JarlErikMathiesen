@@ -40,6 +40,8 @@ const Name = styled.h2`
   font-size: 1.1rem;
   margin: 0;
   font-weight: 300;
+  overflow-wrap: break-word;
+  word-break: break-word;
 `;
 
 const Location = styled.p`

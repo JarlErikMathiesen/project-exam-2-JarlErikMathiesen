@@ -5,15 +5,21 @@ import { getVenues } from '../api/venues';
 import VenueCard from '../components/venue/VenueCard';
 
 const VenueList = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
   padding: 1rem;
-`;
 
-const VenueLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
 
 export default function HomePage() {

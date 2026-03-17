@@ -42,26 +42,11 @@ const Sidebar = styled.div`
   }
 `;
 
-/* const Gallery = styled.div`
-  width: 100%;
-  height: 350px;
-  overflow: hidden;
-  border-radius: ${({ theme }) => theme.radius.lg};
-`;
-
-const MainImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`; */
-
 const Title = styled.h1`
   margin: 0;
   font-size: 2rem;
   overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
-  min-width: 0;
+  word-break: break-word;
 `;
 
 const TitleWrapper = styled.div`
@@ -70,7 +55,6 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
   gap: 0;
   width: 100%;
-  min-width: 0;
 `;
 
 const Location = styled.p`

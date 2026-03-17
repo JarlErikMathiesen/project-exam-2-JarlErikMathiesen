@@ -12,6 +12,7 @@ const BookingBox = styled.div`
   padding: 1.5rem;
   border-radius: ${({ theme }) => theme.radius.sm};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
 `;
 
 const GuestWrapper = styled.div`
