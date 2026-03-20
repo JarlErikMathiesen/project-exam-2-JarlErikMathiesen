@@ -7,7 +7,6 @@ const CalendarWrapper = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: center;
-  max-width; 500px;
 
   .rdp-root {
     --rdp-day-width: 28px;
