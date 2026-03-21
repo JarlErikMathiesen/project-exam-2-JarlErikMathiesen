@@ -63,7 +63,7 @@ export default function HomePage() {
       try {
         const data = await getVenues();
         setVenues(data);
-        /*  setFilteredVenues(data); */
+        setFilteredVenues(data);
       } catch (err) {
         console.error(err);
         setError('Failed to load venues');
@@ -76,11 +76,31 @@ export default function HomePage() {
   }, []);
 
   function handleSearch() {
+    let results = [...venues];
     console.log('Search input:', searchInput);
+
+    if (searchInput.location) {
+      const query = searchInput.location.toLowerCase();
+
+      results = results.filter((venue) =>
+        `${venue.location?.city || ''} ${venue.location?.country || ''}`
+          .toLowerCase()
+          .includes(query),
+      );
+    }
+
+    if (searchInput.guests) {
+      results = results.filter(
+        (venue) => venue.maxGuests >= Number(searchInput.guests),
+      );
+    }
+
+    setFilteredVenues(results);
   }
 
   if (loading) return <p>Loading venues...</p>;
   if (error) return <p>{error}</p>;
+
   return (
     <>
       <SearchSection>
@@ -118,9 +138,13 @@ export default function HomePage() {
       </SearchSection>
 
       <VenueList>
-        {venues.map((venue) => (
-          <VenueCard key={venue.id} venue={venue} />
-        ))}
+        {filteredVenues.length === 0 ? (
+          <div>No venues found.</div>
+        ) : (
+          filteredVenues.map((venue) => (
+            <VenueCard key={venue.id} venue={venue} />
+          ))
+        )}
       </VenueList>
     </>
   );
