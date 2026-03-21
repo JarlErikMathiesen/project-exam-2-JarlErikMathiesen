@@ -6,6 +6,7 @@ import BookingCalendar from './BookingCalendar';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import BookingPrice from './BookingPrice';
+import { getDisabledRanges, isDateRangeBooked } from '../../utils/date';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -27,21 +28,7 @@ export default function BookingCard({ venue, bookings }) {
   const [dateTo, setDateTo] = useState();
   const [guests, setGuests] = useState(1);
 
-  const disabledRanges = [
-    { before: new Date() },
-    ...bookings.map((booking) => ({
-      from: new Date(booking.dateFrom),
-      to: new Date(booking.dateTo),
-    })),
-  ];
-
-  console.log(disabledRanges);
-
-  function isDateRangeBooked(startDate, endDate) {
-    return disabledRanges.some((booking) => {
-      return startDate < booking.to && endDate > booking.from;
-    });
-  }
+  const disabledRanges = getDisabledRanges(bookings);
 
   function handleGuestChange(e) {
     const value = Number(e.target.value);
@@ -63,7 +50,7 @@ export default function BookingCard({ venue, bookings }) {
     const start = new Date(dateFrom);
     const end = new Date(dateTo);
 
-    if (isDateRangeBooked(start, end)) {
+    if (isDateRangeBooked(start, end, bookings)) {
       alert('These dates are already booked');
       return;
     }
