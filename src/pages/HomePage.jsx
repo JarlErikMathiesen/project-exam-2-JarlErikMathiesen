@@ -5,6 +5,7 @@ import VenueCard from '../components/venue/VenueCard';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { MapPin, Calendar, PersonStanding } from 'lucide-react';
+import { isDateRangeBooked } from '../utils/date';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -93,6 +94,20 @@ export default function HomePage() {
       results = results.filter(
         (venue) => venue.maxGuests >= Number(searchInput.guests),
       );
+    }
+
+    if (searchInput.date) {
+      const selectedDate = new Date(searchInput.date);
+
+      results = results.filter((venue) => {
+        if (!venue.bookings || venue.bookings.length === 0) return true;
+
+        return !isDateRangeBooked(
+          selectedDate,
+          new Date(selectedDate.getTime() + 86400000),
+          venue.bookings,
+        );
+      });
     }
 
     setFilteredVenues(results);
