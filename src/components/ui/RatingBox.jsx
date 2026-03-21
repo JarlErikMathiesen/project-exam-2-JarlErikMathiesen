@@ -2,16 +2,16 @@ import styled from 'styled-components';
 
 const RatingWrapper = styled.div`
   display: flex;
-  align-items: center;
   gap: 0.3rem;
   margin-top: 10px;
   align-self: baseline;
+  align-items: center;
+  justify-self: end;
 `;
 
 const StyledRatingBox = styled.span`
   background: ${({ theme }) => theme.colors.primary};
   padding: 4px;
-
   color: ${({ theme }) => theme.colors.white};
 `;
 

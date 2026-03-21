@@ -71,12 +71,11 @@ const Price = styled.p`
 
 const PriceText = styled.p`
   margin-bottom: 0;
+  justify-self: end;
 `;
 
 const RightContent = styled.div`
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
   gap: 0.5rem;
   justify-content: space-between;
 `;
