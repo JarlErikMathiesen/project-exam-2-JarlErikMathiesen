@@ -6,6 +6,7 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { MapPin, Calendar, PersonStanding } from 'lucide-react';
 import { isDateRangeBooked } from '../utils/date';
+import BookingCalendar from '../components/venue/BookingCalendar';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -24,8 +25,13 @@ const SearchCard = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
 `;
 
 const VenueList = styled.div`
@@ -46,6 +52,20 @@ const VenueList = styled.div`
   }
 `;
 
+const Field = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+`;
+
+const Label = styled.span`
+  font-size: 14px;
+  color: ${({ theme }) => theme.colors.text};
+  opacity: 0.6;
+  margin-bottom: 2px;
+`;
+
 export default function HomePage() {
   const [venues, setVenues] = useState([]);
   const [filteredVenues, setFilteredVenues] = useState([]);
@@ -55,7 +75,8 @@ export default function HomePage() {
 
   const [searchInput, setSearchInput] = useState({
     location: '',
-    date: '',
+    dateFrom: '',
+    dateTo: '',
     guests: '',
   });
 
@@ -96,17 +117,21 @@ export default function HomePage() {
       );
     }
 
-    if (searchInput.date) {
-      const selectedDate = new Date(searchInput.date);
+    if (searchInput.dateFrom && searchInput.dateTo) {
+      const start = new Date(searchInput.dateFrom);
+
+      const end = new Date(searchInput.dateTo);
+      end.setDate(end.getDate());
+
+      if (end <= start) {
+        alert('Check-out must be after check-in');
+        return;
+      }
 
       results = results.filter((venue) => {
         if (!venue.bookings || venue.bookings.length === 0) return true;
 
-        return !isDateRangeBooked(
-          selectedDate,
-          new Date(selectedDate.getTime() + 86400000),
-          venue.bookings,
-        );
+        return !isDateRangeBooked(start, end, venue.bookings);
       });
     }
 
@@ -120,35 +145,58 @@ export default function HomePage() {
     <>
       <SearchSection>
         <SearchCard>
-          <Input
-            icon={<MapPin size={16} />}
-            placeholder="Place"
-            value={searchInput.location}
-            onChange={(e) =>
-              setSearchInput({ ...searchInput, location: e.target.value })
-            }
-          />
+          <Field>
+            <Label>Location</Label>
+            <Input
+              icon={<MapPin size={16} />}
+              placeholder="Place"
+              value={searchInput.location}
+              onChange={(e) =>
+                setSearchInput({ ...searchInput, location: e.target.value })
+              }
+            />
+          </Field>
 
-          <Input
-            icon={<Calendar size={16} />}
-            type="date"
-            value={searchInput.date}
-            onChange={(e) =>
-              setSearchInput({ ...searchInput, date: e.target.value })
-            }
-          />
+          <Field>
+            <Label>Check-in</Label>
+            <Input
+              icon={<Calendar size={16} />}
+              type="date"
+              value={searchInput.dateFrom}
+              onChange={(e) =>
+                setSearchInput({ ...searchInput, dateFrom: e.target.value })
+              }
+            />
+          </Field>
 
-          <Input
-            icon={<PersonStanding size={16} />}
-            type="number"
-            placeholder="People"
-            value={searchInput.guests}
-            onChange={(e) =>
-              setSearchInput({ ...searchInput, guests: e.target.value })
-            }
-          />
+          <Field>
+            <Label>Check-out</Label>
+            <Input
+              icon={<Calendar size={16} />}
+              type="date"
+              value={searchInput.dateTo}
+              onChange={(e) =>
+                setSearchInput({ ...searchInput, dateTo: e.target.value })
+              }
+            />
+          </Field>
 
-          <Button onClick={handleSearch}>Search</Button>
+          <Field>
+            <Label>Guests</Label>
+            <Input
+              icon={<PersonStanding size={16} />}
+              type="number"
+              placeholder="Guests"
+              value={searchInput.guests}
+              onChange={(e) =>
+                setSearchInput({ ...searchInput, guests: e.target.value })
+              }
+            />
+          </Field>
+
+          <ButtonWrapper>
+            <Button onClick={handleSearch}>Search</Button>
+          </ButtonWrapper>
         </SearchCard>
       </SearchSection>
 

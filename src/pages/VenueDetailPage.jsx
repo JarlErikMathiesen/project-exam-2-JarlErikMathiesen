@@ -116,7 +116,9 @@ export default function VenueDetailPage() {
       try {
         const data = await getVenueById(id);
         setVenue(data);
-        console.log(data);
+        data.bookings.forEach((booking) => {
+          console.log(booking.dateFrom, booking.dateTo);
+        });
       } catch (error) {
         console.error(error);
       } finally {

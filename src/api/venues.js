@@ -1,7 +1,7 @@
 import { apiFetch } from './client';
 
 export const getVenues = async () => {
-  const data = await apiFetch('/holidaze/venues?_bookings=true');
+  const data = await apiFetch('/holidaze/venues?_bookings=true&sortOrder=asc');
   return data.data;
 };
 
