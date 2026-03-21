@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { getVenues } from '../api/venues';
 import VenueCard from '../components/venue/VenueCard';
@@ -24,6 +23,7 @@ const SearchCard = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
+    align-items: center;
   }
 `;
 
@@ -47,19 +47,23 @@ const VenueList = styled.div`
 
 export default function HomePage() {
   const [venues, setVenues] = useState([]);
+  const [filteredVenues, setFilteredVenues] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [searchInput, setSearchInput] = useState({
+    location: '',
+    date: '',
+    guests: '',
+  });
 
   useEffect(() => {
     async function loadVenues() {
       try {
         const data = await getVenues();
         setVenues(data);
-        data.forEach((venue) => {
-          if (venue.media.length > 1) {
-            console.log(`(${venue.name})${venue.media.length}`);
-          }
-        });
+        /*  setFilteredVenues(data); */
       } catch (err) {
         console.error(err);
         setError('Failed to load venues');
@@ -71,19 +75,48 @@ export default function HomePage() {
     loadVenues();
   }, []);
 
+  function handleSearch() {
+    console.log('Search input:', searchInput);
+  }
+
   if (loading) return <p>Loading venues...</p>;
   if (error) return <p>{error}</p>;
-
   return (
     <>
       <SearchSection>
         <SearchCard>
-          <Input icon={<MapPin size={16} />} placeholder="Place" />
-          <Input icon={<Calendar size={16} />} placeholder="Time" />
-          <Input icon={<PersonStanding size={16} />} placeholder="People" />
-          <Button>Search</Button>
+          <Input
+            icon={<MapPin size={16} />}
+            placeholder="Place"
+            value={searchInput.location}
+            onChange={(e) =>
+              setSearchInput({ ...searchInput, location: e.target.value })
+            }
+          />
+
+          <Input
+            icon={<Calendar size={16} />}
+            type="date"
+            value={searchInput.date}
+            onChange={(e) =>
+              setSearchInput({ ...searchInput, date: e.target.value })
+            }
+          />
+
+          <Input
+            icon={<PersonStanding size={16} />}
+            type="number"
+            placeholder="People"
+            value={searchInput.guests}
+            onChange={(e) =>
+              setSearchInput({ ...searchInput, guests: e.target.value })
+            }
+          />
+
+          <Button onClick={handleSearch}>Search</Button>
         </SearchCard>
       </SearchSection>
+
       <VenueList>
         {venues.map((venue) => (
           <VenueCard key={venue.id} venue={venue} />
