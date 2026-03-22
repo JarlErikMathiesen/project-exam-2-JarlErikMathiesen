@@ -1,5 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
+import { deleteVenue } from '../../api/venues';
+
+const handleDelete = async (id) => {
+  try {
+    await deleteVenue(id);
+
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export default function ManagerVenues({ venues }) {
   const navigate = useNavigate();
@@ -35,6 +46,7 @@ export default function ManagerVenues({ venues }) {
             >
               View bookings
             </Button>
+            <Button onClick={() => handleDelete(venue.id)}>Delete</Button>
           </div>
         ))
       ) : (
