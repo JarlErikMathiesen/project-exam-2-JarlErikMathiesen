@@ -11,15 +11,31 @@ export default function CreateVenue() {
   const [price, setPrice] = useState('');
   const [maxGuests, setMaxGuests] = useState('');
   const [description, setDescription] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const [city, setCity] = useState('');
+  const [country, setCountry] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const venueData = {
       name,
+      description,
       price: Number(price),
       maxGuests: Number(maxGuests),
-      description,
+
+      media: imageUrl
+        ? [
+            {
+              url: imageUrl,
+            },
+          ]
+        : [],
+
+      location: {
+        city: city || null,
+        country: country || null,
+      },
     };
 
     try {
@@ -58,6 +74,24 @@ export default function CreateVenue() {
         placeholder="description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+      />
+
+      <Input
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+      />
+
+      <Input
+        placeholder="City"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+      />
+
+      <Input
+        placeholder="Country"
+        value={country}
+        onChange={(e) => setCountry(e.target.value)}
       />
       <Button type="submit">Create</Button>
     </form>

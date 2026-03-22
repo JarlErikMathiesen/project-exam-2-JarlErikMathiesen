@@ -15,9 +15,26 @@ export default function ManagerVenues({ venues }) {
       {venues?.length > 0 ? (
         venues.map((venue) => (
           <div key={venue.id}>
-            {console.log(venue.name, venue.price)}
+            {venue.media?.[0]?.url && (
+              <img
+                src={venue.media[0].url}
+                alt={venue.name}
+                style={{ width: '200px', height: '120px', objectFit: 'cover' }}
+              />
+            )}
+
             <h3>{venue.name}</h3>
-            <p>{venue.price}</p>
+            <p>{venue.price}£ per night</p>
+
+            <Button onClick={() => navigate(`/profile/venue/${venue.id}/edit`)}>
+              Edit
+            </Button>
+
+            <Button
+              onClick={() => navigate(`/profile/venue/${venue.id}/bookings`)}
+            >
+              View bookings
+            </Button>
           </div>
         ))
       ) : (
