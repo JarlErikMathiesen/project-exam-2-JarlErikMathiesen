@@ -4,6 +4,7 @@ import { useAuth } from '../features/auth/useAuth';
 import { getProfile, updateProfileAvatar } from '../api/profiles';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import CustomerBookings from '../components/profile/CustomerBookings';
 
 export default function Profile() {
   const { name } = useAuth();
@@ -26,6 +27,8 @@ export default function Profile() {
   }, [name]);
 
   if (!profile) return <p>Loading...</p>;
+  const isManager = profile.venueManager;
+  console.log(isManager);
 
   const handleAvatarSubmit = async () => {
     const body = {
@@ -79,79 +82,18 @@ export default function Profile() {
         </InfoRow>
       </InfoBox>
 
-      <BookingsTitle>My bookings</BookingsTitle>
-
-      <BookingList>
-        {profile.bookings?.length > 0 ? (
-          profile.bookings.map((booking) => (
-            <BookingCard key={booking.id}>
-              {booking.venue.media?.[0]?.url && (
-                <BookingImage
-                  src={booking.venue.media[0].url}
-                  alt={booking.venue.media[0].alt || booking.venue.name}
-                />
-              )}
-              <BookingInfo>
-                <VenueName>{booking.venue.name}</VenueName>
-                <DateRow>
-                  <DateText>
-                    From {new Date(booking.dateFrom).toLocaleDateString()}
-                  </DateText>
-                  <DateText>
-                    To {new Date(booking.dateTo).toLocaleDateString()}
-                  </DateText>
-                </DateRow>
-              </BookingInfo>
-            </BookingCard>
-          ))
-        ) : (
-          <p>No bookings yet.</p>
-        )}
-      </BookingList>
+      {profile.venueManager ? (
+        <ManagerVenues />
+      ) : (
+        <CustomerBookings bookings={profile.bookings} />
+      )}
     </Page>
   );
 }
 
-const BookingList = styled.div`
-  justify-content: center;
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-`;
-
-const BookingCard = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 300px;
-`;
-
-const BookingImage = styled.img`
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: ${({ theme }) => theme.radius.sm};
-`;
-
-const BookingInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-`;
-
-const VenueName = styled.span`
-  font-size: 20px;
-  font-weight: 300;
-`;
-
-const DateRow = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const DateText = styled.span`
-  font-size: 13px;
-`;
+function ManagerVenues() {
+  return <h2>My venues</h2>;
+}
 
 const Page = styled.div`
   display: flex;
@@ -198,9 +140,4 @@ const Label = styled.span`
 
 const Value = styled.span`
   font-weight: 500;
-`;
-
-const BookingsTitle = styled.h2`
-  font-size: 1.6rem;
-  margin-top: 1rem;
 `;
