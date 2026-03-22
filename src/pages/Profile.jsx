@@ -5,6 +5,7 @@ import { getProfile, updateProfileAvatar } from '../api/profiles';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import CustomerBookings from '../components/profile/CustomerBookings';
+import ManagerVenues from '../components/profile/ManagerVenues';
 
 export default function Profile() {
   const { name } = useAuth();
@@ -83,16 +84,12 @@ export default function Profile() {
       </InfoBox>
 
       {profile.venueManager ? (
-        <ManagerVenues />
+        <ManagerVenues venues={profile.venues} />
       ) : (
         <CustomerBookings bookings={profile.bookings} />
       )}
     </Page>
   );
-}
-
-function ManagerVenues() {
-  return <h2>My venues</h2>;
 }
 
 const Page = styled.div`

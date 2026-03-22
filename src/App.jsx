@@ -3,7 +3,8 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Profile from './pages/profile';
+import Profile from './pages/Profile';
+import CreateVenue from './pages/CreateVenue';
 import VenueDetailPage from './pages/VenueDetailPage';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/create-venue" element={<CreateVenue />} />
           <Route path="/venue/:id" element={<VenueDetailPage />} />
         </Routes>
       </Layout>
