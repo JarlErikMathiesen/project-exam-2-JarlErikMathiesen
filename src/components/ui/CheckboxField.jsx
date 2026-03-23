@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 
-export default function CheckboxField({ label, checked, onChange, name, id }) {
+export default function CheckboxField({
+  label,
+  checked,
+  onChange,
+  name,
+  id,
+  icon,
+}) {
   return (
     <Wrapper>
+      {icon && <IconWrapper>{icon}</IconWrapper>}
+
       <StyledCheckbox
         type="checkbox"
         id={id || name}
@@ -10,10 +19,16 @@ export default function CheckboxField({ label, checked, onChange, name, id }) {
         checked={checked}
         onChange={onChange}
       />
+
       <Label htmlFor={id || name}>{label}</Label>
     </Wrapper>
   );
 }
+
+const IconWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const Wrapper = styled.div`
   display: flex;

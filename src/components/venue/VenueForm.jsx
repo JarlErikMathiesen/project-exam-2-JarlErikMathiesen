@@ -4,6 +4,7 @@ import Button from '../ui/Button';
 import { amenities } from '../../utils/amenities';
 import styled from 'styled-components';
 import FormField from '../ui/FormField';
+import CheckboxField from '../ui/CheckBoxField';
 
 export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   const [name, setName] = useState('');
@@ -111,15 +112,11 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
           <AmenitiesGrid>
             {amenities.map(({ key, TrueIcon }) => (
               <AmenityItem key={key}>
-                <Left>
-                  <TrueIcon size={18} />
-                  <span>{key}</span>
-                </Left>
-
-                <input
-                  type="checkbox"
+                <CheckboxField
+                  label={key}
                   checked={meta[key]}
                   onChange={() => handleAmenityChange(key)}
+                  icon={<TrueIcon size={18} />}
                 />
               </AmenityItem>
             ))}
@@ -198,10 +195,4 @@ const AmenityItem = styled.label`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-
-const Left = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
 `;
