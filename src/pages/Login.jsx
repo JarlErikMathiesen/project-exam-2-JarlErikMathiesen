@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../features/auth/useAuth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import FormField from '../components/ui/FormField';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -34,20 +35,22 @@ export default function Login() {
         <Title>Login</Title>
 
         <Form onSubmit={handleSubmit}>
-          <Input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <Input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
+          <FormField label="Email">
+            <Input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormField>
+          <FormField label="Password">
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </FormField>
           <Button type="submit">Log in</Button>
 
           <RegisterText>

@@ -3,6 +3,7 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import { amenities } from '../../utils/amenities';
 import styled from 'styled-components';
+import FormField from '../ui/FormField';
 
 export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   const [name, setName] = useState('');
@@ -73,33 +74,37 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   return (
     <FormWrapper>
       <FormInner onSubmit={handleSubmit}>
-        <Row>
+        <FormField label="Name">
           <Input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Name"
+            placeholder="Enter name.."
           />
-        </Row>
-        <Row>
+        </FormField>
+        <FormField label="Image">
           <Input
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="Image URL"
+            placeholder="Enter image URL"
           />
-        </Row>
+        </FormField>
         <Row>
-          <Input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Price"
-          />
-          <Input
-            type="number"
-            value={maxGuests}
-            onChange={(e) => setMaxGuests(e.target.value)}
-            placeholder="Max guests"
-          />
+          <FormField label="Price">
+            <Input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Price"
+            />
+          </FormField>
+          <FormField label="Guests">
+            <Input
+              type="number"
+              value={maxGuests}
+              onChange={(e) => setMaxGuests(e.target.value)}
+              placeholder="Max guests"
+            />
+          </FormField>
         </Row>
         <AmenitiesTitle>Amenities</AmenitiesTitle>
         <AmenitiesBox>
@@ -120,7 +125,7 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
             ))}
           </AmenitiesGrid>
         </AmenitiesBox>
-        <Row>
+        <FormField label="Description">
           <Input
             as="textarea"
             rows={5}
@@ -128,19 +133,22 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           />
-        </Row>
-
+        </FormField>
         <Row>
-          <Input
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="City"
-          />
-          <Input
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            placeholder="Country"
-          />
+          <FormField label="City">
+            <Input
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
+            />
+          </FormField>
+          <FormField label="Country">
+            <Input
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              placeholder="Country"
+            />
+          </FormField>
         </Row>
         <Button type="submit" disabled={loading}>
           {loading ? 'Saving...' : 'Save venue'}

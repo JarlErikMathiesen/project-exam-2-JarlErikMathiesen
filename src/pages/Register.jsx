@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { registerUser } from '../api/auth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
+import FormField from '../components/ui/FormField';
 
 const Page = styled.div`
   min-height: 100vh;
@@ -98,27 +99,33 @@ export default function Register() {
         <Title>Register</Title>
 
         <Form>
-          <Input
-            type="text"
-            name="name"
-            placeholder="Name"
-            value={form.name}
-            onChange={handleChange}
-          />
-          <Input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-          />
+          <FormField label="Name">
+            <Input
+              type="text"
+              name="name"
+              placeholder="Name"
+              value={form.name}
+              onChange={handleChange}
+            />
+          </FormField>
+          <FormField label="Email">
+            <Input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={form.email}
+              onChange={handleChange}
+            />
+          </FormField>
+          <FormField label="Password">
+            <Input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+            />
+          </FormField>
 
           <CheckboxRow>
             <Checkbox

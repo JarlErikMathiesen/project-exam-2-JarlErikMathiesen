@@ -6,7 +6,7 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import { MapPin, Calendar, PersonStanding } from 'lucide-react';
 import { isDateRangeBooked } from '../utils/date';
-import BookingCalendar from '../components/venue/BookingCalendar';
+import FormField from '../components/ui/FormField';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -50,20 +50,6 @@ const VenueList = styled.div`
   @media (min-width: 1024px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-`;
-
-const Field = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-`;
-
-const Label = styled.span`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.text};
-  opacity: 0.6;
-  margin-bottom: 2px;
 `;
 
 export default function HomePage() {
@@ -145,8 +131,7 @@ export default function HomePage() {
     <>
       <SearchSection>
         <SearchCard>
-          <Field>
-            <Label>Location</Label>
+          <FormField label="Location">
             <Input
               icon={<MapPin size={16} />}
               placeholder="Place"
@@ -155,10 +140,9 @@ export default function HomePage() {
                 setSearchInput({ ...searchInput, location: e.target.value })
               }
             />
-          </Field>
+          </FormField>
 
-          <Field>
-            <Label>Check-in</Label>
+          <FormField label="Check-in">
             <Input
               icon={<Calendar size={16} />}
               type="date"
@@ -167,10 +151,9 @@ export default function HomePage() {
                 setSearchInput({ ...searchInput, dateFrom: e.target.value })
               }
             />
-          </Field>
+          </FormField>
 
-          <Field>
-            <Label>Check-out</Label>
+          <FormField label="Check-out">
             <Input
               icon={<Calendar size={16} />}
               type="date"
@@ -179,10 +162,9 @@ export default function HomePage() {
                 setSearchInput({ ...searchInput, dateTo: e.target.value })
               }
             />
-          </Field>
+          </FormField>
 
-          <Field>
-            <Label>Guests</Label>
+          <FormField label="Guests">
             <Input
               icon={<PersonStanding size={16} />}
               type="number"
@@ -192,7 +174,7 @@ export default function HomePage() {
                 setSearchInput({ ...searchInput, guests: e.target.value })
               }
             />
-          </Field>
+          </FormField>
 
           <ButtonWrapper>
             <Button onClick={handleSearch}>Search</Button>
