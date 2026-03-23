@@ -4,6 +4,7 @@ import { registerUser } from '../api/auth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
+import CheckboxField from '../components/ui/CheckBoxField';
 
 const Page = styled.div`
   min-height: 100vh;
@@ -36,7 +37,7 @@ const Form = styled.div`
   gap: 10px;
 `;
 
-const CheckboxRow = styled.div`
+/* const CheckboxRow = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -57,7 +58,7 @@ const CheckboxLabel = styled.label`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.text};
   cursor: pointer;
-`;
+`; */
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -127,18 +128,12 @@ export default function Register() {
             />
           </FormField>
 
-          <CheckboxRow>
-            <Checkbox
-              type="checkbox"
-              name="venueManager"
-              id="venueManager"
-              checked={form.venueManager}
-              onChange={handleChange}
-            />
-            <CheckboxLabel htmlFor="venueManager">
-              Register as manager
-            </CheckboxLabel>
-          </CheckboxRow>
+          <CheckboxField
+            label="Register as manager"
+            name="venueManager"
+            checked={form.venueManager}
+            onChange={handleChange}
+          />
 
           <Button onClick={handleSubmit}>Register</Button>
         </Form>
