@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import { amenities } from '../../utils/amenities';
 
 export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   const [name, setName] = useState('');
@@ -12,6 +13,13 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
 
+  const [meta, setMeta] = useState({
+    wifi: false,
+    parking: false,
+    breakfast: false,
+    pets: false,
+  });
+
   useEffect(() => {
     if (initialData.name) {
       setName(initialData.name || '');
@@ -22,9 +30,21 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
       setImageUrl(initialData.media?.[0]?.url || '');
       setCity(initialData.location?.city || '');
       setCountry(initialData.location?.country || '');
+      setMeta({
+        wifi: initialData.meta?.wifi || false,
+        parking: initialData.meta?.parking || false,
+        breakfast: initialData.meta?.breakfast || false,
+        pets: initialData.meta?.pets || false,
+      });
     }
   }, [initialData]);
 
+  const handleAmenityChange = (key) => {
+    setMeta((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -40,7 +60,11 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
         city: city || null,
         country: country || null,
       },
+
+      meta,
     };
+
+    console.log('Submitting:', venueData);
 
     onSubmit(venueData);
   };
@@ -85,6 +109,27 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
         onChange={(e) => setCountry(e.target.value)}
         placeholder="Country"
       />
+
+      <h3>Amenities</h3>
+
+      <div>
+        {amenities.map(({ key, TrueIcon }) => (
+          <label
+            key={key}
+            style={{ display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            <TrueIcon size={16} />
+
+            <input
+              type="checkbox"
+              checked={meta[key]}
+              onChange={() => handleAmenityChange(key)}
+            />
+
+            {key}
+          </label>
+        ))}
+      </div>
 
       <Button type="submit" disabled={loading}>
         {loading ? 'Saving...' : 'Save venue'}
