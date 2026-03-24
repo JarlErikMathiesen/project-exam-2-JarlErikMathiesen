@@ -187,8 +187,13 @@ const AmenitiesTitle = styled.h3`
 
 const AmenitiesGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 0.8rem 1rem;
+  justify-self: center;
+
+  @media (min-width: 480px) {
+    grid-template-columns: 1fr 1fr;
+    justify-self: normal;
+  }
 `;
 
 const AmenityItem = styled.label`

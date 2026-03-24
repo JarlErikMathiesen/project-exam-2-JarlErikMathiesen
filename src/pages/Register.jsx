@@ -37,29 +37,6 @@ const Form = styled.div`
   gap: 10px;
 `;
 
-/* const CheckboxRow = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 4px;
-`;
-
-const Checkbox = styled.input`
-  width: 18px;
-  height: 18px;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 3px;
-  cursor: pointer;
-  accent-color: ${({ theme }) => theme.colors.primary};
-  flex-shrink: 0;
-`;
-
-const CheckboxLabel = styled.label`
-  font-size: 14px;
-  color: ${({ theme }) => theme.colors.text};
-  cursor: pointer;
-`; */
-
 export default function Register() {
   const [form, setForm] = useState({
     name: '',
