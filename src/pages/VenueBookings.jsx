@@ -30,6 +30,9 @@ export default function VenueBookings() {
   return (
     <BookingsList>
       <h1>{venue.name} bookings</h1>
+      {venue.media?.[0]?.url && (
+        <VenueImage src={venue.media[0].url} style={{}} />
+      )}
 
       {venue.bookings?.length > 0 ? (
         venue.bookings.map((booking) => (
@@ -75,4 +78,11 @@ const DateRow = styled.div`
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+`;
+
+const VenueImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  max-width: 700px;
 `;
