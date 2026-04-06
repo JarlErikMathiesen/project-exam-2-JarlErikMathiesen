@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
 
 const Wrapper = styled.div`
   display: grid;
@@ -86,8 +87,10 @@ const Arrow = styled.button`
 export default function VenueGallery({ media, name }) {
   const images =
     media?.length > 0
-      ? media.map((m) => m.url)
-      : ['https://placehold.co/800x600'];
+      ? media.map((m) =>
+          m.url && m.url.trim() !== '' ? m.url : placeholderImg,
+        )
+      : [placeholderImg];
   const [index, setIndex] = useState(0);
   if (images.length === 0) return null;
 
