@@ -107,13 +107,16 @@ export default function VenueGallery({ media, name }) {
       <MainImageWrapper>
         <MainImage src={images[index]} alt={name} />
 
-        <Arrow left onClick={prev}>
-          <ChevronLeft size={20} />
-        </Arrow>
-
-        <Arrow right onClick={next}>
-          <ChevronRight size={20} />
-        </Arrow>
+        {images.length > 1 && (
+          <>
+            <Arrow left onClick={prev}>
+              <ChevronLeft size={20} />
+            </Arrow>
+            <Arrow right onClick={next}>
+              <ChevronRight size={20} />
+            </Arrow>
+          </>
+        )}
       </MainImageWrapper>
 
       <ThumbnailGrid>
