@@ -109,6 +109,7 @@ const PriceOwnerWrapper = styled.div`
 export default function VenueDetailPage() {
   const { id } = useParams();
   const [venue, setVenue] = useState(null);
+  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -116,6 +117,7 @@ export default function VenueDetailPage() {
       try {
         const data = await getVenueById(id);
         setVenue(data);
+        setBookings(data.bookings);
         data.bookings.forEach((booking) => {
           console.log(booking.dateFrom, booking.dateTo);
         });
@@ -132,17 +134,8 @@ export default function VenueDetailPage() {
   if (loading) return <p>Loading...</p>;
   if (!venue) return <p>Venue not found</p>;
 
-  const {
-    name,
-    media,
-    location,
-    price,
-    owner,
-    meta,
-    rating,
-    description,
-    bookings,
-  } = venue;
+  const { name, media, location, price, owner, meta, rating, description } =
+    venue;
 
   return (
     <Wrapper>
@@ -193,7 +186,11 @@ export default function VenueDetailPage() {
         </MainContent>
 
         <Sidebar>
-          <BookingCard venue={venue} bookings={bookings} />
+          <BookingCard
+            venue={venue}
+            bookings={bookings}
+            setBookings={setBookings}
+          />
         </Sidebar>
       </Grid>
     </Wrapper>

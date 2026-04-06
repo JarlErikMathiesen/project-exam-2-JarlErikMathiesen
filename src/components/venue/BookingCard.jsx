@@ -22,7 +22,7 @@ const GuestWrapper = styled.div`
   gap: 10px;
 `;
 
-export default function BookingCard({ venue, bookings }) {
+export default function BookingCard({ venue, bookings, setBookings }) {
   const { isLoggedIn } = useAuth();
   const [dateFrom, setDateFrom] = useState();
   const [dateTo, setDateTo] = useState();
@@ -69,11 +69,13 @@ export default function BookingCard({ venue, bookings }) {
     try {
       const booking = await createBooking(bookingData);
       console.log('Booking created:', booking);
+      setBookings((prev) => [...prev, booking]);
+      setDateFrom(undefined);
+      setDateTo(undefined);
+
+      alert('Booking successful!');
     } catch (error) {
       console.error('Booking failed:', error);
-    } finally {
-      alert('Booking successful!');
-      window.location.reload();
     }
   }
 
