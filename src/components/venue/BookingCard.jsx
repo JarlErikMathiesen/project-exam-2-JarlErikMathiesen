@@ -71,6 +71,9 @@ export default function BookingCard({ venue, bookings }) {
       console.log('Booking created:', booking);
     } catch (error) {
       console.error('Booking failed:', error);
+    } finally {
+      alert('Booking successful!');
+      window.location.reload();
     }
   }
 
