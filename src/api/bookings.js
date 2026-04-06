@@ -8,3 +8,9 @@ export const createBooking = async (bookingData) => {
 
   return data.data;
 };
+
+export const deleteBooking = async (id) => {
+  await apiFetch(`/holidaze/bookings/${id}`, {
+    method: 'DELETE',
+  });
+};

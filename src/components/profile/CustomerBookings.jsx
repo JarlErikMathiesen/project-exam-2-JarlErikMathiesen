@@ -1,4 +1,16 @@
 import styled from 'styled-components';
+import Button from '../ui/Button';
+import { deleteBooking } from '../../api/bookings';
+
+const handleDelete = async (id) => {
+  try {
+    await deleteBooking(id);
+
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export default function CustomerBookings({ bookings }) {
   if (!bookings) return null;
@@ -28,6 +40,9 @@ export default function CustomerBookings({ bookings }) {
                   </DateText>
                 </DateRow>
               </BookingInfo>
+              <Button onClick={() => handleDelete(booking.id)}>
+                Delete Booking
+              </Button>
             </BookingCard>
           ))
         ) : (

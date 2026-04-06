@@ -2,6 +2,18 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
+import Button from '../components/ui/Button';
+import { deleteBooking } from '../api/bookings';
+
+const handleDelete = async (id) => {
+  try {
+    await deleteBooking(id);
+
+    window.location.reload();
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export default function VenueBookings() {
   const { id } = useParams();
