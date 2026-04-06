@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Users } from 'lucide-react';
 import RatingBox from '../ui/RatingBox';
+import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
 
 const Card = styled(Link)`
   background: ${({ theme }) => theme.colors.white};
@@ -82,11 +83,20 @@ const RightContent = styled.div`
 
 export default function VenueCard({ venue }) {
   const imageUrl = venue.media?.[0]?.url;
+  const validImageUrl =
+    imageUrl && imageUrl.trim() !== '' ? imageUrl : placeholderImg;
 
   return (
     <Card to={`/venue/${venue.id}`}>
       <ImageWrapper>
-        <Image src={imageUrl} alt={venue.name} />
+        <Image
+          src={validImageUrl}
+          alt={venue.name}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = placeholderImg;
+          }}
+        />
       </ImageWrapper>
       <Content>
         <LeftContent>
