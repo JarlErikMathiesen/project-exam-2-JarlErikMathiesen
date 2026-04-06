@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom';
 import { Users } from 'lucide-react';
 import RatingBox from '../ui/RatingBox';
 import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
-
-const Card = styled(Link)`
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: ${({ theme }) => theme.radius.md};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-`;
+import Card from '../ui/Card';
 
 const Content = styled.div`
   display: flex;

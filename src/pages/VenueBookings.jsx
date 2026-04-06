@@ -37,8 +37,10 @@ export default function VenueBookings() {
       {venue.bookings?.length > 0 ? (
         venue.bookings.map((booking) => (
           <BookingCard key={booking.id}>
-            <h3>{booking.customer?.name || 'Guest'}</h3>
-
+            <CustomerWrapper>
+              <CustomerText>{booking.customer?.name || 'Guest'}</CustomerText>
+              <CustomerImage src={booking.customer?.avatar.url} />
+            </CustomerWrapper>
             <DateRow>
               <span>
                 From {new Date(booking.dateFrom).toLocaleDateString()}
@@ -55,6 +57,24 @@ export default function VenueBookings() {
     </BookingsList>
   );
 }
+
+const CustomerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`;
+
+const CustomerText = styled.span`
+  font-size: 1.2rem;
+  font-weight: 300;
+`;
+
+const CustomerImage = styled.img`
+  border-radius: 20px;
+  height: 2rem;
+  width: 2rem;
+`;
 
 const BookingsList = styled.div`
   display: flex;
