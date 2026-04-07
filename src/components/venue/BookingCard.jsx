@@ -22,6 +22,14 @@ const GuestWrapper = styled.div`
   gap: 10px;
 `;
 
+const DisabledButton = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.disabled};
+  cursor: auto;
+  &:hover {
+    opacity: 1;
+  }
+`;
+
 export default function BookingCard({ venue, bookings, setBookings }) {
   const { isLoggedIn } = useAuth();
   const [dateFrom, setDateFrom] = useState();
@@ -79,13 +87,13 @@ export default function BookingCard({ venue, bookings, setBookings }) {
     }
   }
 
-  if (!isLoggedIn) {
+  /*  if (!isLoggedIn) {
     return (
       <BookingBox>
         <div>Log in to book</div>
       </BookingBox>
     );
-  }
+  } */
 
   return (
     <BookingBox>
@@ -110,8 +118,11 @@ export default function BookingCard({ venue, bookings, setBookings }) {
       />
 
       <BookingPrice dateFrom={dateFrom} dateTo={dateTo} price={venue.price} />
-
-      <Button onClick={handleBooking}>Book</Button>
+      {!isLoggedIn ? (
+        <DisabledButton>Log in to book</DisabledButton>
+      ) : (
+        <Button onClick={handleBooking}>Book</Button>
+      )}
     </BookingBox>
   );
 }

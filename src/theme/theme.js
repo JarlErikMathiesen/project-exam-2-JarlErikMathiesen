@@ -4,6 +4,7 @@ export const theme = {
     background: '#F8F5F2',
     text: '#2F2F2F',
     white: '#FFFFFF',
+    disabled: '#acacac',
     border: '#E5E2DF',
   },
 
