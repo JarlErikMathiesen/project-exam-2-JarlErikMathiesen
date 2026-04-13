@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
+import BackButton from '../components/ui/BackButton';
 
 export default function VenueBookings() {
   const { id } = useParams();
@@ -54,6 +55,9 @@ export default function VenueBookings() {
       ) : (
         <p>No bookings yet.</p>
       )}
+      <div>
+        <BackButton />
+      </div>
     </BookingsList>
   );
 }
