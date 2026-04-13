@@ -4,7 +4,7 @@ import Button from '../ui/Button';
 import { amenities } from '../../utils/amenities';
 import styled from 'styled-components';
 import FormField from '../ui/FormField';
-import CheckboxField from '../ui/CheckBoxField';
+import CheckboxField from '../ui/CheckboxField';
 
 export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   const [name, setName] = useState('');
