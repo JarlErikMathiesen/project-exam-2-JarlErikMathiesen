@@ -4,7 +4,7 @@ import { registerUser } from '../api/auth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
-import CheckboxField from '../components/ui/CheckBoxField';
+import CheckboxField from '../components/ui/CheckboxField';
 
 const Page = styled.div`
   min-height: 100vh;
