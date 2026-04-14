@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import { MapPin, Calendar, PersonStanding } from 'lucide-react';
 import { isDateRangeBooked } from '../utils/date';
 import FormField from '../components/ui/FormField';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -124,7 +125,7 @@ export default function HomePage() {
     setFilteredVenues(results);
   }
 
-  if (loading) return <p>Loading venues...</p>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <p>{error}</p>;
 
   return (
@@ -181,7 +182,6 @@ export default function HomePage() {
           </ButtonWrapper>
         </SearchCard>
       </SearchSection>
-
       <VenueList>
         {filteredVenues.length === 0 ? (
           <div>No venues found.</div>

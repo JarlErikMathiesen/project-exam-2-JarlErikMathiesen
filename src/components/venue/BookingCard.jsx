@@ -87,14 +87,6 @@ export default function BookingCard({ venue, bookings, setBookings }) {
     }
   }
 
-  /*  if (!isLoggedIn) {
-    return (
-      <BookingBox>
-        <div>Log in to book</div>
-      </BookingBox>
-    );
-  } */
-
   return (
     <BookingBox>
       <GuestWrapper>
