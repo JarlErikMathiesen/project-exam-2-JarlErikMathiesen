@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { theme } from '../../theme/theme';
 
 const spin = keyframes`
   0% { transform: rotate(0deg); }
@@ -18,8 +17,8 @@ const Ring = styled.div`
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 15px solid ${theme.colors.border};
-  border-top-color: ${theme.colors.primary};
+  border: 15px solid ${({ theme }) => theme.colors.border};
+  border-top-color: ${({ theme }) => theme.colors.primary};
   animation: ${spin} 0.75s linear infinite;
 `;
 
