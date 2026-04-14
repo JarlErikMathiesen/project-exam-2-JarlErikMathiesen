@@ -11,7 +11,7 @@ const FooterBar = styled.footer`
   align-items: center;
   text-align: center;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -35,7 +35,7 @@ const FooterText = styled.div`
   flex-direction: column;
   font-size: 14px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: row;
     gap: 10px;
   }

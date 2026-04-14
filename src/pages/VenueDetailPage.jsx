@@ -26,7 +26,7 @@ const Grid = styled.div`
   display: grid;
   gap: 2rem;
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 2fr 1fr;
   }
 `;
@@ -38,7 +38,7 @@ const MainContent = styled.div`
 `;
 
 const Sidebar = styled.div`
-  @media (min-width: 1024px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
   }
 `;
 

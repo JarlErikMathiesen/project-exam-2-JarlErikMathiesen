@@ -190,7 +190,7 @@ const AmenitiesGrid = styled.div`
   gap: 0.8rem 1rem;
   justify-self: center;
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr 1fr;
     justify-self: normal;
   }

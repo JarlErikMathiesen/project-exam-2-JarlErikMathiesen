@@ -18,7 +18,9 @@ export const theme = {
     lg: '16px',
   },
 
-  layout: {
-    maxWidth: '1200px',
+  breakpoints: {
+    sm: '480px',
+    md: '768px',
+    lg: '1024px',
   },
 };

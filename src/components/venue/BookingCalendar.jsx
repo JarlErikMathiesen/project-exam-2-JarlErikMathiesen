@@ -24,7 +24,7 @@ const CalendarWrapper = styled.div`
     width: 100%;
   }
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     .rdp-root {
       --rdp-day-width: 44px;
       --rdp-day-height: 44px;

@@ -24,7 +24,7 @@ const SearchCard = styled.div`
   flex-direction: column;
   gap: 0.75rem;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: row;
     align-items: stretch;
   }
@@ -40,15 +40,15 @@ const VenueList = styled.div`
   gap: 1rem;
   padding: 1rem;
 
-  @media (min-width: 480px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 `;

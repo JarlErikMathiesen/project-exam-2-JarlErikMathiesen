@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   height: 350px;
   margin-bottom: 35px;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 3fr 1fr;
   }
 
@@ -36,7 +36,7 @@ const ThumbnailGrid = styled.div`
   display: none;
   min-height: 0;
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
@@ -79,7 +79,7 @@ const Arrow = styled.button`
   ${({ left }) => left && 'left: 10px;'}
   ${({ right }) => right && 'right: 10px;'}
 
-  @media (min-width: 768px) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `;
