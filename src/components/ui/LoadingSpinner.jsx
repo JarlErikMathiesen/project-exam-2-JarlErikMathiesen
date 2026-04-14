@@ -16,10 +16,26 @@ const SpinnerWrapper = styled.div`
 const Ring = styled.div`
   width: 150px;
   height: 150px;
-  border-radius: 50%;
   border: 15px solid ${({ theme }) => theme.colors.border};
   border-top-color: ${({ theme }) => theme.colors.primary};
+  border-radius: 50%;
   animation: ${spin} 0.75s linear infinite;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    width: 250px;
+    height: 250px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: 400px;
+    height: 400px;
+    border-width: 25px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: 520px;
+    height: 520px;
+  }
 `;
 
 export default function LoadingSpinner() {
