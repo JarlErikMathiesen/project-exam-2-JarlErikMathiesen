@@ -2,6 +2,7 @@ import { createVenue } from '../api/venues';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import VenueForm from '../components/venue/VenueForm';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 export default function CreateVenue() {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ export default function CreateVenue() {
       setLoading(false);
     }
   };
+
+  if (loading) return <LoadingSpinner />;
 
   return (
     <>

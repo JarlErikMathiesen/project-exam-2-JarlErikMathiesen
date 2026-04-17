@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getVenueById } from '../api/venues';
 import styled from 'styled-components';
 import BackButton from '../components/ui/BackButton';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 export default function VenueBookings() {
   const { id } = useParams();
@@ -25,7 +26,7 @@ export default function VenueBookings() {
     fetchVenue();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
   if (!venue) return <p>Venue not found</p>;
 
   return (

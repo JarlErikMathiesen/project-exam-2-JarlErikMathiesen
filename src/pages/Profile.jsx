@@ -6,6 +6,7 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import CustomerBookings from '../components/profile/CustomerBookings';
 import ManagerVenues from '../components/profile/ManagerVenues';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 export default function Profile() {
   const { name } = useAuth();
@@ -27,7 +28,7 @@ export default function Profile() {
     if (name) loadProfile();
   }, [name]);
 
-  if (!profile) return <p>Loading...</p>;
+  if (!profile) return <LoadingSpinner />;
   const isManager = profile.venueManager;
   console.log(isManager);
 

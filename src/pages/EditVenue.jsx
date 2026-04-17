@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getVenueById, updateVenue } from '../api/venues';
 import VenueForm from '../components/venue/VenueForm';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 export default function EditVenue() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ export default function EditVenue() {
     }
   };
 
-  if (!venue) return <p>Loading...</p>;
+  if (!venue) return <LoadingSpinner />;
 
   return (
     <>

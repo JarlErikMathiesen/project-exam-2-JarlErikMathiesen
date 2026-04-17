@@ -6,6 +6,7 @@ import RatingBox from '../components/ui/RatingBox';
 import BookingCard from '../components/venue/BookingCard';
 import { amenities } from '../utils/amenities';
 import VenueGallery from '../components/venue/VenueGallery';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 const Amenities = styled.div`
   display: flex;
@@ -131,7 +132,7 @@ export default function VenueDetailPage() {
     loadVenue();
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner />;
   if (!venue) return <p>Venue not found</p>;
 
   const { name, media, location, price, owner, meta, rating, description } =
