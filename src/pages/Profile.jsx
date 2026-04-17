@@ -85,7 +85,10 @@ export default function Profile() {
       </InfoBox>
 
       {profile.venueManager ? (
-        <ManagerVenues venues={profile.venues} />
+        <>
+          <ManagerVenues venues={profile.venues} />
+          <CustomerBookings bookings={profile.bookings} />
+        </>
       ) : (
         <CustomerBookings bookings={profile.bookings} />
       )}
