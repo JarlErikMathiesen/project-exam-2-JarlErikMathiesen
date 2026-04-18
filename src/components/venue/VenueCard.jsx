@@ -38,7 +38,7 @@ const Name = styled.h2`
 `;
 
 const Location = styled.p`
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   opacity: 0.8;
   margin: 0;
 `;
