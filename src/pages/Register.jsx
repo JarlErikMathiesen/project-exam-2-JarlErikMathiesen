@@ -7,6 +7,7 @@ import CheckboxField from '../components/ui/CheckboxField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 const schema = yup.object({
   name: yup
@@ -60,6 +61,7 @@ const Form = styled.form`
 `;
 
 export default function Register() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -72,8 +74,9 @@ export default function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const response = await registerUser(data);
-      console.log(response);
+      await registerUser(data);
+
+      navigate('/login');
     } catch (error) {
       console.error(error);
     }
