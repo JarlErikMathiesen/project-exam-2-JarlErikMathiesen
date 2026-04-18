@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-export default function FormField({ label, children }) {
+export default function FormField({ label, id, children }) {
   return (
     <Wrapper>
-      {label && <Label>{label}</Label>}
+      {label && <Label htmlFor={id}>{label}</Label>}
       {children}
     </Wrapper>
   );
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   flex: 1;
 `;
 
-const Label = styled.span`
+const Label = styled.label`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.text};
   opacity: 0.6;

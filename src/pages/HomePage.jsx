@@ -132,8 +132,9 @@ export default function HomePage() {
     <>
       <SearchSection>
         <SearchCard>
-          <FormField label="Location">
+          <FormField label="Location" id="location">
             <Input
+              id="location"
               icon={<MapPin size={16} />}
               placeholder="Place"
               value={searchInput.location}
@@ -143,8 +144,9 @@ export default function HomePage() {
             />
           </FormField>
 
-          <FormField label="Check-in">
+          <FormField label="Check-in" id="checkin">
             <Input
+              id="checkin"
               icon={<Calendar size={16} />}
               type="date"
               value={searchInput.dateFrom}
@@ -154,8 +156,9 @@ export default function HomePage() {
             />
           </FormField>
 
-          <FormField label="Check-out">
+          <FormField label="Check-out" id="checkout">
             <Input
+              id="checkout"
               icon={<Calendar size={16} />}
               type="date"
               value={searchInput.dateTo}
@@ -165,8 +168,9 @@ export default function HomePage() {
             />
           </FormField>
 
-          <FormField label="Guests">
+          <FormField label="Guests" id="guests">
             <Input
+              id="guests"
               icon={<PersonStanding size={16} />}
               type="number"
               placeholder="Guests"

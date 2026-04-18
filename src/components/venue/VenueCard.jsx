@@ -101,7 +101,7 @@ export default function VenueCard({ venue }) {
 
           <InfoRow>
             <SmallInfo>
-              Max
+              Max guests
               <Users size={16} />
               {venue.maxGuests}
             </SmallInfo>

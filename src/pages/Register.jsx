@@ -77,8 +77,9 @@ export default function Register() {
         <Title>Register</Title>
 
         <Form>
-          <FormField label="Name">
+          <FormField label="Name" id="name">
             <Input
+              id="name"
               type="text"
               name="name"
               placeholder="Name"
@@ -86,8 +87,9 @@ export default function Register() {
               onChange={handleChange}
             />
           </FormField>
-          <FormField label="Email">
+          <FormField label="Email" id="email">
             <Input
+              id="email"
               type="email"
               name="email"
               placeholder="Email"
@@ -95,8 +97,9 @@ export default function Register() {
               onChange={handleChange}
             />
           </FormField>
-          <FormField label="Password">
+          <FormField label="Password" id="password">
             <Input
+              id="password"
               type="password"
               name="password"
               placeholder="Password"

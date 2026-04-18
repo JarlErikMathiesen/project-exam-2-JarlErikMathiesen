@@ -35,16 +35,18 @@ export default function Login() {
         <Title>Login</Title>
 
         <Form onSubmit={handleSubmit}>
-          <FormField label="Email">
+          <FormField label="Email" id="email">
             <Input
+              id="email"
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormField>
-          <FormField label="Password">
+          <FormField label="Password" id="password">
             <Input
+              id="password"
               type="password"
               placeholder="Password"
               value={password}

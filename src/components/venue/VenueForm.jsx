@@ -75,31 +75,35 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
   return (
     <FormWrapper>
       <FormInner onSubmit={handleSubmit}>
-        <FormField label="Name">
+        <FormField label="Name" id="name">
           <Input
+            id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Enter name.."
           />
         </FormField>
-        <FormField label="Image">
+        <FormField label="Image" id="image">
           <Input
+            id="image"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
             placeholder="Enter image URL"
           />
         </FormField>
         <Row>
-          <FormField label="Price">
+          <FormField label="Price" id="price">
             <Input
+              id="price"
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Price"
             />
           </FormField>
-          <FormField label="Guests">
+          <FormField label="Guests" id="guests">
             <Input
+              id="guests"
               type="number"
               value={maxGuests}
               onChange={(e) => setMaxGuests(e.target.value)}
@@ -114,6 +118,7 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
               <AmenityItem key={key}>
                 <CheckboxField
                   label={key}
+                  name={key}
                   checked={meta[key]}
                   onChange={() => handleAmenityChange(key)}
                   icon={<TrueIcon size={18} />}
@@ -122,8 +127,9 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
             ))}
           </AmenitiesGrid>
         </AmenitiesBox>
-        <FormField label="Description">
+        <FormField label="Description" id="description">
           <Input
+            id="description"
             as="textarea"
             rows={5}
             value={description}
@@ -132,15 +138,17 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
           />
         </FormField>
         <Row>
-          <FormField label="City">
+          <FormField label="City" id="city">
             <Input
+              id="city"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="City"
             />
           </FormField>
-          <FormField label="Country">
+          <FormField label="Country" id="country">
             <Input
+              id="country"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               placeholder="Country"
@@ -181,7 +189,7 @@ const AmenitiesBox = styled.div`
   padding: 1rem;
 `;
 
-const AmenitiesTitle = styled.h3`
+const AmenitiesTitle = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
