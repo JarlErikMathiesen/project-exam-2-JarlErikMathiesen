@@ -6,6 +6,7 @@ export const theme = {
     white: '#FFFFFF',
     disabled: '#acacac',
     border: '#E5E2DF',
+    error: '#fc0303',
   },
 
   font: {
