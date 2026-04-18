@@ -90,9 +90,10 @@ export default function BookingCard({ venue, bookings, setBookings }) {
   return (
     <BookingBox>
       <GuestWrapper>
-        <label>Guests (max {venue.maxGuests})</label>
+        <label htmlFor="guests">Guests (max {venue.maxGuests})</label>
 
         <Input
+          id="guests"
           type="number"
           min={1}
           max={venue.maxGuests}

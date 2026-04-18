@@ -52,7 +52,7 @@ export default function Header() {
       <Logo to="/">HOLIDAZE</Logo>
       {isLoggedIn ? (
         <HeaderWrapper>
-          <HeaderLink to="/profile">
+          <HeaderLink to="/profile" aria-label="Profile">
             <User size={24} />
           </HeaderLink>
           <HeaderLink onClick={handleLogout}>Logout</HeaderLink>
