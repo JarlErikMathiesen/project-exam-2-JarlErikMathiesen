@@ -66,6 +66,8 @@ export default function Register() {
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   const onSubmit = async (data) => {
