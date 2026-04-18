@@ -1,29 +1,31 @@
+import React from 'react';
 import styled from 'styled-components';
 
-export default function CheckboxField({
-  label,
-  checked,
-  onChange,
-  name,
-  id,
-  icon,
-}) {
-  return (
-    <Wrapper>
-      {icon && <IconWrapper>{icon}</IconWrapper>}
+const CheckboxField = React.forwardRef(
+  ({ label, name, id, icon, checked, onChange, ...props }, ref) => {
+    const isControlled = checked !== undefined;
 
-      <StyledCheckbox
-        type="checkbox"
-        id={id || name}
-        name={name}
-        checked={checked}
-        onChange={onChange}
-      />
+    return (
+      <Wrapper>
+        {icon && <IconWrapper>{icon}</IconWrapper>}
 
-      <Label htmlFor={id || name}>{label}</Label>
-    </Wrapper>
-  );
-}
+        <StyledCheckbox
+          type="checkbox"
+          id={id || name}
+          name={name}
+          ref={!isControlled ? ref : undefined}
+          checked={isControlled ? checked : undefined}
+          onChange={isControlled ? onChange : undefined}
+          {...(!isControlled ? props : {})}
+        />
+
+        <Label htmlFor={id || name}>{label}</Label>
+      </Wrapper>
+    );
+  },
+);
+
+export default CheckboxField;
 
 const IconWrapper = styled.div`
   display: flex;
