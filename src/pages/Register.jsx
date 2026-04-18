@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const schema = yup.object({
   name: yup
@@ -60,8 +61,22 @@ const Form = styled.form`
   gap: 10px;
 `;
 
+const Toast = styled.div`
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: ${({ theme }) => theme.colors.primary};
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+`;
+
 export default function Register() {
   const navigate = useNavigate();
+  const [success, setSuccess] = useState(false);
   const {
     register,
     handleSubmit,
@@ -76,7 +91,11 @@ export default function Register() {
     try {
       await registerUser(data);
 
-      navigate('/login');
+      setSuccess(true);
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
     } catch (error) {
       console.error(error);
     }
@@ -129,6 +148,7 @@ export default function Register() {
           </Button>
         </Form>
       </Card>
+      {success && <Toast>Registration successful!</Toast>}
     </Page>
   );
 }
