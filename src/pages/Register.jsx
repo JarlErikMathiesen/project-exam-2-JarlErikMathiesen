@@ -1,10 +1,32 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { registerUser } from '../api/auth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
 import CheckboxField from '../components/ui/CheckboxField';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  name: yup
+    .string()
+    .required('Name is required')
+    .matches(/^[A-Za-z0-9_]+$/, 'Only letters, numbers and underscore allowed'),
+
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Invalid email')
+    .matches(/^[^\s@]+@stud\.noroff\.no$/, 'Must be a stud.noroff.no email'),
+
+  password: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters'),
+
+  venueManager: yup.boolean(),
+});
 
 const Page = styled.div`
   min-height: 100vh;
@@ -30,7 +52,7 @@ const Title = styled.h1`
   margin: 0;
 `;
 
-const Form = styled.div`
+const Form = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -38,34 +60,18 @@ const Form = styled.div`
 `;
 
 export default function Register() {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    venueManager: false,
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const body = {
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      venueManager: form.venueManager,
-    };
-
+  const onSubmit = async (data) => {
     try {
-      const data = await registerUser(body);
-      console.log(data);
+      const response = await registerUser(data);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -76,43 +82,46 @@ export default function Register() {
       <Card>
         <Title>Register</Title>
 
-        <Form>
-          <FormField label="Name">
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <FormField label="Name" id="name" error={errors.name?.message}>
             <Input
+              id="name"
               type="text"
-              name="name"
               placeholder="Name"
-              value={form.name}
-              onChange={handleChange}
+              {...register('name')}
             />
           </FormField>
-          <FormField label="Email">
+
+          <FormField label="Email" id="email" error={errors.email?.message}>
             <Input
+              id="email"
               type="email"
-              name="email"
               placeholder="Email"
-              value={form.email}
-              onChange={handleChange}
+              {...register('email')}
             />
           </FormField>
-          <FormField label="Password">
+
+          <FormField
+            label="Password"
+            id="password"
+            error={errors.password?.message}
+          >
             <Input
+              id="password"
               type="password"
-              name="password"
               placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
+              {...register('password')}
             />
           </FormField>
 
           <CheckboxField
             label="Register as manager"
-            name="venueManager"
-            checked={form.venueManager}
-            onChange={handleChange}
+            {...register('venueManager')}
           />
 
-          <Button onClick={handleSubmit}>Register</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Registering...' : 'Register'}
+          </Button>
         </Form>
       </Card>
     </Page>
