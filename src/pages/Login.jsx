@@ -7,10 +7,12 @@ import { useAuth } from '../features/auth/useAuth';
 import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
+import { useToast } from '../features/ui/ToastContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { showToast } = useToast();
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -25,7 +27,7 @@ export default function Login() {
       navigate('/profile');
     } catch (error) {
       console.error('Login failed:', error);
-      alert('Invalid email or password');
+      showToast('Invalid email or password', 'error');
     }
   };
 

@@ -7,6 +7,7 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import BookingPrice from './BookingPrice';
 import { getDisabledRanges, isDateRangeBooked } from '../../utils/date';
+import { useToast } from '../../features/ui/ToastContext';
 
 const BookingBox = styled.div`
   background: ${({ theme }) => theme.colors.white};
@@ -35,6 +36,7 @@ export default function BookingCard({ venue, bookings, setBookings }) {
   const [dateFrom, setDateFrom] = useState();
   const [dateTo, setDateTo] = useState();
   const [guests, setGuests] = useState(1);
+  const { showToast } = useToast();
 
   const disabledRanges = getDisabledRanges(bookings);
 
@@ -47,11 +49,11 @@ export default function BookingCard({ venue, bookings, setBookings }) {
   }
   async function handleBooking() {
     if (!dateFrom || !dateTo) {
-      alert('Please select dates');
+      showToast('Please select dates', 'error');
       return;
     }
     if (guests > venue.maxGuests) {
-      alert(`Maximum ${venue.maxGuests} guests allowed`);
+      showToast(`Maximum ${venue.maxGuests} guests allowed`, 'error');
       return;
     }
 
@@ -59,11 +61,11 @@ export default function BookingCard({ venue, bookings, setBookings }) {
     const end = new Date(dateTo);
 
     if (isDateRangeBooked(start, end, bookings)) {
-      alert('These dates are already booked');
+      showToast('These dates are already booked', 'error');
       return;
     }
     if (end <= start) {
-      alert('Check-out must be after check-in');
+      showToast('Check-out must be after check-in', 'error');
       return;
     }
 
@@ -81,8 +83,9 @@ export default function BookingCard({ venue, bookings, setBookings }) {
       setDateFrom(undefined);
       setDateTo(undefined);
 
-      alert('Booking successful!');
+      showToast('Booking successful!');
     } catch (error) {
+      showToast('Booking failed', 'error');
       console.error('Booking failed:', error);
     }
   }

@@ -8,6 +8,7 @@ import { MapPin, Calendar, PersonStanding } from 'lucide-react';
 import { isDateRangeBooked } from '../utils/date';
 import FormField from '../components/ui/FormField';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { useToast } from '../features/ui/ToastContext';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -56,6 +57,7 @@ const VenueList = styled.div`
 export default function HomePage() {
   const [venues, setVenues] = useState([]);
   const [filteredVenues, setFilteredVenues] = useState([]);
+  const { showToast } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -111,7 +113,7 @@ export default function HomePage() {
       end.setDate(end.getDate());
 
       if (end <= start) {
-        alert('Check-out must be after check-in');
+        showToast('Check-out must be after check-in', 'error');
         return;
       }
 

@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { theme } from './theme/theme';
 import { GlobalStyles } from './theme/GlobalStyles';
 import { AuthProvider } from './features/auth/AuthContext';
+import { ToastProvider } from './features/ui/ToastContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -13,7 +14,9 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <ThemeProvider theme={theme}>
           <GlobalStyles />
-          <App />
+          <ToastProvider>
+            <App />
+          </ToastProvider>
         </ThemeProvider>
       </BrowserRouter>
     </AuthProvider>
