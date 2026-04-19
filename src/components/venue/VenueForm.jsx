@@ -57,6 +57,8 @@ export default function VenueForm({
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     defaultValues: {
       name: initialData.name || '',
       description: initialData.description || '',
