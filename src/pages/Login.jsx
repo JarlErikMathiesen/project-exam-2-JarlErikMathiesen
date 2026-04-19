@@ -8,7 +8,7 @@ import Input from '../components/ui/Input';
 import Button from '../components/ui/Button';
 import FormField from '../components/ui/FormField';
 import { useToast } from '../features/ui/ToastContext';
-
+import MainHeading from '../components/ui/MainHeading';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,7 +34,7 @@ export default function Login() {
   return (
     <Page>
       <Card>
-        <Title>Login</Title>
+        <MainHeading>Login</MainHeading>
 
         <Form onSubmit={handleSubmit}>
           <FormField label="Email" id="email">
@@ -82,13 +82,6 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.text};
-  margin: 0;
 `;
 
 const Form = styled.form`

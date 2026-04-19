@@ -10,6 +10,7 @@ import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useToast } from '../features/ui/ToastContext';
+import MainHeading from '../components/ui/MainHeading';
 
 const schema = yup.object({
   name: yup
@@ -46,13 +47,6 @@ const Card = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.text};
-  margin: 0;
 `;
 
 const Form = styled.form`
@@ -93,7 +87,7 @@ export default function Register() {
   return (
     <Page>
       <Card>
-        <Title>Register</Title>
+        <MainHeading>Register</MainHeading>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormField label="Name" id="name" error={errors.name?.message}>

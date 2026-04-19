@@ -7,6 +7,7 @@ import Button from '../components/ui/Button';
 import CustomerBookings from '../components/profile/CustomerBookings';
 import ManagerVenues from '../components/profile/ManagerVenues';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import MainHeading from '../components/ui/MainHeading';
 
 export default function Profile() {
   const { name } = useAuth();
@@ -54,7 +55,7 @@ export default function Profile() {
   };
   return (
     <Page>
-      <Title>Profile</Title>
+      <MainHeading>Profile</MainHeading>
 
       <Avatar src={profile.avatar?.url} alt={profile.name} />
       <AvatarButtons>
@@ -100,11 +101,6 @@ const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
 `;
 
 const Avatar = styled.img`

@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getVenueById, updateVenue } from '../api/venues';
 import VenueForm from '../components/venue/VenueForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import styled from 'styled-components';
+import MainHeading from '../components/ui/MainHeading';
 
 export default function EditVenue() {
   const { id } = useParams();
@@ -40,7 +42,7 @@ export default function EditVenue() {
 
   return (
     <>
-      <h1>Edit venue</h1>
+      <MainHeading>Edit venue</MainHeading>
       <VenueForm
         initialData={venue}
         onCancel={() => navigate('/profile')}

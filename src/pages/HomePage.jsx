@@ -9,6 +9,7 @@ import { isDateRangeBooked } from '../utils/date';
 import FormField from '../components/ui/FormField';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { useToast } from '../features/ui/ToastContext';
+import MainHeading from '../components/ui/MainHeading';
 
 const SearchSection = styled.div`
   padding: 1rem;
@@ -132,6 +133,7 @@ export default function HomePage() {
 
   return (
     <>
+      <MainHeading>Holidaze</MainHeading>
       <SearchSection>
         <SearchCard>
           <FormField label="Location" id="location">

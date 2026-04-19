@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import VenueForm from '../components/venue/VenueForm';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import MainHeading from '../components/ui/MainHeading';
 
 export default function CreateVenue() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export default function CreateVenue() {
 
   return (
     <>
-      <h1>Create venue</h1>
+      <MainHeading>Create venue</MainHeading>
       <VenueForm
         onSubmit={handleCreate}
         onCancel={() => navigate('/profile')}
