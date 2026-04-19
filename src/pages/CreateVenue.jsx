@@ -25,7 +25,11 @@ export default function CreateVenue() {
   return (
     <>
       <h1>Create venue</h1>
-      <VenueForm onSubmit={handleCreate} loading={loading} />
+      <VenueForm
+        onSubmit={handleCreate}
+        onCancel={() => navigate('/profile')}
+        loading={loading}
+      />
     </>
   );
 }

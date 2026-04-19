@@ -45,7 +45,12 @@ const schema = yup.object({
     .min(1, 'country must have at least one character'),
 });
 
-export default function VenueForm({ initialData = {}, onSubmit, loading }) {
+export default function VenueForm({
+  initialData = {},
+  onSubmit,
+  onCancel,
+  loading,
+}) {
   const {
     register,
     handleSubmit,
@@ -158,6 +163,9 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
         </Row>
         <Button type="submit" disabled={loading}>
           {loading ? 'Saving...' : 'Save venue'}
+        </Button>
+        <Button type="button" onClick={onCancel}>
+          Cancel
         </Button>
       </FormInner>
     </FormWrapper>

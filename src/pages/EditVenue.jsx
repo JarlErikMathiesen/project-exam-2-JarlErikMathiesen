@@ -43,6 +43,7 @@ export default function EditVenue() {
       <h1>Edit venue</h1>
       <VenueForm
         initialData={venue}
+        onCancel={() => navigate('/profile')}
         onSubmit={handleUpdate}
         loading={loading}
       />

@@ -12,5 +12,5 @@ export default function BackButton({ fallback = '/' }) {
     }
   };
 
-  return <Button onClick={handleBack}>← Back</Button>;
+  return <Button onClick={handleBack}>Back</Button>;
 }
