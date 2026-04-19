@@ -8,6 +8,15 @@ const Card = styled(Link)`
   overflow: hidden;
   text-decoration: none;
   color: inherit;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
+  }
 `;
 
 export default Card;
