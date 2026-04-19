@@ -118,14 +118,14 @@ export default function VenueForm({
         </FormField>
         <Row>
           <FormField label="Price" id="price" error={errors.price?.message}>
-            <Input type="number" {...register('price')} />
+            <Input type="number" id="price" {...register('price')} />
           </FormField>
           <FormField
             label="Guests"
             id="guests"
             error={errors.maxGuests?.message}
           >
-            <Input type="number" {...register('maxGuests')} />
+            <Input type="number" id="guests" {...register('maxGuests')} />
           </FormField>
         </Row>
         <AmenitiesTitle>Amenities</AmenitiesTitle>
@@ -149,18 +149,23 @@ export default function VenueForm({
           id="description"
           error={errors.description?.message}
         >
-          <Input as="textarea" rows={5} {...register('description')} />
+          <Input
+            id="description"
+            as="textarea"
+            rows={5}
+            {...register('description')}
+          />
         </FormField>
         <Row>
           <FormField label="City" id="city" error={errors.city?.message}>
-            <Input {...register('city')} />
+            <Input id="city" {...register('city')} />
           </FormField>
           <FormField
             label="Country"
             id="country"
             error={errors.country?.message}
           >
-            <Input {...register('country')} />
+            <Input id="country" {...register('country')} />
           </FormField>
         </Row>
         <Button type="submit" disabled={loading}>
