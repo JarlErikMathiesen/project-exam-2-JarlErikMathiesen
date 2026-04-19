@@ -50,50 +50,51 @@ const ButtonsGrid = styled.div`
   }
 `;
 
+const CreateButtonWrapper = styled.div`
+  display: flex;
+`;
+
 export default function ManagerVenues({ venues }) {
   const navigate = useNavigate();
 
   return (
     <>
       <h2>My venues</h2>
-      <List>
+      <CreateButtonWrapper>
         <Button onClick={() => navigate('/profile/create-venue')}>
           + Create new venue
         </Button>
+      </CreateButtonWrapper>
+      <List>
+        {venues.map((venue) => (
+          <Card key={venue.id} as="div">
+            <CardGrid>
+              {venue.media?.[0]?.url && (
+                <img src={venue.media[0].url} alt={venue.name} />
+              )}
 
-        {venues?.length > 0 ? (
-          venues.map((venue) => (
-            <Card key={venue.id} as="div">
-              <CardGrid>
-                {venue.media?.[0]?.url && (
-                  <img src={venue.media[0].url} alt={venue.name} />
-                )}
+              <h3>{venue.name}</h3>
+              <p>{venue.price}£ per night</p>
+              <ButtonsGrid>
+                <Button
+                  onClick={() =>
+                    navigate(`/profile/venue/${venue.id}/bookings`)
+                  }
+                >
+                  View bookings
+                </Button>
 
-                <h3>{venue.name}</h3>
-                <p>{venue.price}£ per night</p>
-                <ButtonsGrid>
-                  <Button
-                    onClick={() =>
-                      navigate(`/profile/venue/${venue.id}/bookings`)
-                    }
-                  >
-                    View bookings
-                  </Button>
+                <Button
+                  onClick={() => navigate(`/profile/venue/${venue.id}/edit`)}
+                >
+                  Edit
+                </Button>
 
-                  <Button
-                    onClick={() => navigate(`/profile/venue/${venue.id}/edit`)}
-                  >
-                    Edit
-                  </Button>
-
-                  <Button onClick={() => handleDelete(venue.id)}>Delete</Button>
-                </ButtonsGrid>
-              </CardGrid>
-            </Card>
-          ))
-        ) : (
-          <p>No venues yet.</p>
-        )}
+                <Button onClick={() => handleDelete(venue.id)}>Delete</Button>
+              </ButtonsGrid>
+            </CardGrid>
+          </Card>
+        ))}
       </List>
     </>
   );
