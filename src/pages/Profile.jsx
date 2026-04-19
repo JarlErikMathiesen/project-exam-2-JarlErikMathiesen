@@ -135,7 +135,6 @@ const InfoRow = styled.div`
 `;
 
 const Label = styled.span`
-  color: #777;
   width: 60px;
 `;
 
