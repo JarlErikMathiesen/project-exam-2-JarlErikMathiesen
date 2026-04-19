@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button from '../ui/Button';
 import { deleteBooking } from '../../api/bookings';
+import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
 
 const handleDelete = async (id) => {
   try {
@@ -21,30 +22,40 @@ export default function CustomerBookings({ bookings }) {
 
       <BookingList>
         {bookings.length > 0 ? (
-          bookings.map((booking) => (
-            <BookingCard key={booking.id}>
-              {booking.venue.media?.[0]?.url && (
+          bookings.map((booking) => {
+            const src =
+              booking.venue.media?.length > 0 &&
+              booking.venue.media[0].url?.trim() !== ''
+                ? booking.venue.media[0].url
+                : placeholderImg;
+
+            return (
+              <BookingCard key={booking.id}>
                 <BookingImage
-                  src={booking.venue.media[0].url}
-                  alt={booking.venue.media[0].alt || booking.venue.name}
+                  src={src}
+                  alt={booking.venue.media?.[0]?.alt || booking.venue.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = placeholderImg;
+                  }}
                 />
-              )}
-              <BookingInfo>
-                <VenueName>{booking.venue.name}</VenueName>
-                <DateRow>
-                  <DateText>
-                    From {new Date(booking.dateFrom).toLocaleDateString()}
-                  </DateText>
-                  <DateText>
-                    To {new Date(booking.dateTo).toLocaleDateString()}
-                  </DateText>
-                </DateRow>
-              </BookingInfo>
-              <Button onClick={() => handleDelete(booking.id)}>
-                Delete Booking
-              </Button>
-            </BookingCard>
-          ))
+                <BookingInfo>
+                  <VenueName>{booking.venue.name}</VenueName>
+                  <DateRow>
+                    <DateText>
+                      From {new Date(booking.dateFrom).toLocaleDateString()}
+                    </DateText>
+                    <DateText>
+                      To {new Date(booking.dateTo).toLocaleDateString()}
+                    </DateText>
+                  </DateRow>
+                </BookingInfo>
+                <Button onClick={() => handleDelete(booking.id)}>
+                  Delete Booking
+                </Button>
+              </BookingCard>
+            );
+          })
         ) : (
           <p>No bookings yet.</p>
         )}
