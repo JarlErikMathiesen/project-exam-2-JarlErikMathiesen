@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import Button from '../ui/Button';
 import { deleteBooking } from '../../api/bookings';
 import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
+import Card from '../ui/Card';
+import List from '../ui/ProfileList';
 
 const handleDelete = async (id) => {
   try {
@@ -20,7 +22,7 @@ export default function CustomerBookings({ bookings }) {
     <>
       <BookingsTitle>My bookings</BookingsTitle>
 
-      <BookingList>
+      <List>
         {bookings.length > 0 ? (
           bookings.map((booking) => {
             const src =
@@ -30,7 +32,7 @@ export default function CustomerBookings({ bookings }) {
                 : placeholderImg;
 
             return (
-              <BookingCard key={booking.id}>
+              <Card key={booking.id}>
                 <BookingImage
                   src={src}
                   alt={booking.venue.media?.[0]?.alt || booking.venue.name}
@@ -50,16 +52,18 @@ export default function CustomerBookings({ bookings }) {
                     </DateText>
                   </DateRow>
                 </BookingInfo>
-                <Button onClick={() => handleDelete(booking.id)}>
-                  Delete Booking
-                </Button>
-              </BookingCard>
+                <ButtonWrapper>
+                  <Button onClick={() => handleDelete(booking.id)}>
+                    Delete Booking
+                  </Button>
+                </ButtonWrapper>
+              </Card>
             );
           })
         ) : (
           <p>No bookings yet.</p>
         )}
-      </BookingList>
+      </List>
     </>
   );
 }
@@ -69,18 +73,28 @@ const BookingsTitle = styled.h2`
   margin-top: 1rem;
 `;
 
-const BookingList = styled.div`
-  justify-content: center;
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-`;
+/* const List = styled.div`
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
 
-const BookingCard = styled.div`
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`; */
+
+const ButtonWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-width: 300px;
+  justify-self: center;
+  padding: 15px;
 `;
 
 const BookingImage = styled.img`
@@ -93,7 +107,8 @@ const BookingImage = styled.img`
 const BookingInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
+  padding: 20px;
 `;
 
 const VenueName = styled.span`

@@ -3,6 +3,7 @@ import Button from '../ui/Button';
 import { deleteVenue } from '../../api/venues';
 import styled from 'styled-components';
 import Card from '../ui/Card';
+import List from '../ui/ProfileList';
 
 const handleDelete = async (id) => {
   try {
@@ -14,7 +15,7 @@ const handleDelete = async (id) => {
   }
 };
 
-const List = styled.div`
+/* const List = styled.div`
   display: grid;
   gap: 1rem;
   padding: 1rem;
@@ -30,7 +31,7 @@ const List = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-`;
+`; */
 
 const CardGrid = styled.div`
   display: flex;
