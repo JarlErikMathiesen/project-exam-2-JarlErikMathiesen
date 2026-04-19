@@ -5,16 +5,63 @@ import { amenities } from '../../utils/amenities';
 import styled from 'styled-components';
 import FormField from '../ui/FormField';
 import CheckboxField from '../ui/CheckboxField';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+const schema = yup.object({
+  name: yup
+    .string()
+    .trim()
+    .required('Name is required')
+    .min(3, 'Name must be at least 3 characters'),
+
+  description: yup
+    .string()
+    .required('Description is required')
+    .min(10, 'Description must be at least 10 characters'),
+
+  price: yup
+    .number()
+    .typeError('Price must be a number')
+    .required('Price is required')
+    .min(1, 'Price must be at least 1'),
+
+  maxGuests: yup
+    .number()
+    .typeError('Guests must be a number')
+    .required('Max guests is required')
+    .min(1, 'At least 1 guest'),
+
+  imageUrl: yup.string().url('Must be a valid URL').nullable(),
+
+  city: yup
+    .string()
+    .required('city location is required')
+    .min(1, 'city must have at least one character'),
+  country: yup
+    .string()
+    .required('country location is required')
+    .min(1, 'country must have at least one character'),
+});
 
 export default function VenueForm({ initialData = {}, onSubmit, loading }) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [price, setPrice] = useState('');
-  const [maxGuests, setMaxGuests] = useState('');
-
-  const [imageUrl, setImageUrl] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: initialData.name || '',
+      description: initialData.description || '',
+      price: initialData.price || '',
+      maxGuests: initialData.maxGuests || '',
+      imageUrl: initialData.media?.[0]?.url || '',
+      city: initialData.location?.city || '',
+      country: initialData.location?.country || '',
+    },
+  });
 
   const [meta, setMeta] = useState({
     wifi: false,
@@ -23,92 +70,55 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
     pets: false,
   });
 
-  useEffect(() => {
-    if (initialData.name) {
-      setName(initialData.name || '');
-      setDescription(initialData.description || '');
-      setPrice(initialData.price || '');
-      setMaxGuests(initialData.maxGuests || '');
-
-      setImageUrl(initialData.media?.[0]?.url || '');
-      setCity(initialData.location?.city || '');
-      setCountry(initialData.location?.country || '');
-      setMeta({
-        wifi: initialData.meta?.wifi || false,
-        parking: initialData.meta?.parking || false,
-        breakfast: initialData.meta?.breakfast || false,
-        pets: initialData.meta?.pets || false,
-      });
-    }
-  }, [initialData]);
-
   const handleAmenityChange = (key) => {
     setMeta((prev) => ({
       ...prev,
       [key]: !prev[key],
     }));
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const onFormSubmit = (data) => {
     const venueData = {
-      name,
-      description,
-      price: Number(price),
-      maxGuests: Number(maxGuests),
+      name: data.name,
+      description: data.description,
+      price: Number(data.price),
+      maxGuests: Number(data.maxGuests),
 
-      media: imageUrl ? [{ url: imageUrl, alt: name }] : [],
+      media: data.imageUrl ? [{ url: data.imageUrl, alt: data.name }] : [],
 
       location: {
-        city: city || null,
-        country: country || null,
+        city: data.city || null,
+        country: data.country || null,
       },
 
       meta,
     };
-
-    console.log('Submitting:', venueData);
 
     onSubmit(venueData);
   };
 
   return (
     <FormWrapper>
-      <FormInner onSubmit={handleSubmit}>
-        <FormField label="Name" id="name">
-          <Input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter name.."
-          />
+      <FormInner onSubmit={handleSubmit(onFormSubmit)}>
+        <FormField label="Name" id="name" error={errors.name?.message}>
+          <Input id="name" placeholder="Enter name.." {...register('name')} />
         </FormField>
-        <FormField label="Image" id="image">
+        <FormField label="Image" id="image" error={errors.imageUrl?.message}>
           <Input
             id="image"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
             placeholder="Enter image URL"
+            {...register('imageUrl')}
           />
         </FormField>
         <Row>
-          <FormField label="Price" id="price">
-            <Input
-              id="price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Price"
-            />
+          <FormField label="Price" id="price" error={errors.price?.message}>
+            <Input type="number" {...register('price')} />
           </FormField>
-          <FormField label="Guests" id="guests">
-            <Input
-              id="guests"
-              type="number"
-              value={maxGuests}
-              onChange={(e) => setMaxGuests(e.target.value)}
-              placeholder="Max guests"
-            />
+          <FormField
+            label="Guests"
+            id="guests"
+            error={errors.maxGuests?.message}
+          >
+            <Input type="number" {...register('maxGuests')} />
           </FormField>
         </Row>
         <AmenitiesTitle>Amenities</AmenitiesTitle>
@@ -127,32 +137,23 @@ export default function VenueForm({ initialData = {}, onSubmit, loading }) {
             ))}
           </AmenitiesGrid>
         </AmenitiesBox>
-        <FormField label="Description" id="description">
-          <Input
-            id="description"
-            as="textarea"
-            rows={5}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Description"
-          />
+        <FormField
+          label="Description"
+          id="description"
+          error={errors.description?.message}
+        >
+          <Input as="textarea" rows={5} {...register('description')} />
         </FormField>
         <Row>
-          <FormField label="City" id="city">
-            <Input
-              id="city"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
-            />
+          <FormField label="City" id="city" error={errors.city?.message}>
+            <Input {...register('city')} />
           </FormField>
-          <FormField label="Country" id="country">
-            <Input
-              id="country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              placeholder="Country"
-            />
+          <FormField
+            label="Country"
+            id="country"
+            error={errors.country?.message}
+          >
+            <Input {...register('country')} />
           </FormField>
         </Row>
         <Button type="submit" disabled={loading}>
