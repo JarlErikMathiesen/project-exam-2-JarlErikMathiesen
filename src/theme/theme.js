@@ -21,7 +21,9 @@ export const theme = {
 
   breakpoints: {
     sm: '480px',
+    smd: '600px',
     md: '768px',
-    lg: '1024px',
+    mlg: '900px',
+    lg: '1100px',
   },
 };

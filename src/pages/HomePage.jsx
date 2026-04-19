@@ -42,11 +42,11 @@ const VenueList = styled.div`
   gap: 1rem;
   padding: 1rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.smd}) {
     grid-template-columns: 1fr 1fr;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.mlg}) {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
