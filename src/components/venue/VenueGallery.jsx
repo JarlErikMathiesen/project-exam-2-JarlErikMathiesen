@@ -4,24 +4,15 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import placeholderImg from '../../assets/holidaze_placeholder_image.jpg';
 
 const Wrapper = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  height: 350px;
   margin-bottom: 35px;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 3fr 1fr;
-  }
-
-  @media (min-width: 1200px) {
-    grid-template-columns: 3fr 2fr;
-  }
 `;
-
 const MainImageWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: clamp(250px, 40vw, 500px);
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radius.lg};
 `;
@@ -49,21 +40,32 @@ const ThumbnailGrid = styled.div`
   }
 `;
 
+const ThumbnailRow = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+
+  scroll-snap-type: x mandatory;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+`;
+
 const Thumbnail = styled.img`
-  width: 100%;
-  height: 100%;
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  min-height: 0;
   border-radius: ${({ theme }) => theme.radius.sm};
   cursor: pointer;
 
-  opacity: ${({ active }) => (active ? 1 : 0.7)};
+  opacity: ${({ active }) => (active ? 1 : 0.6)};
+  border: ${({ active, theme }) =>
+    active ? `2px solid ${theme.colors.primary}` : 'none'};
 
-  @media (max-width: 1199px) {
-    &:nth-child(n + 3) {
-      display: none;
-    }
-  }
+  scroll-snap-align: start;
 `;
 
 const Arrow = styled.button`
@@ -119,8 +121,8 @@ export default function VenueGallery({ media, name }) {
         )}
       </MainImageWrapper>
 
-      <ThumbnailGrid>
-        {images.slice(0, 5).map((img, i) => (
+      <ThumbnailRow>
+        {images.map((img, i) => (
           <Thumbnail
             key={i}
             src={img}
@@ -128,7 +130,7 @@ export default function VenueGallery({ media, name }) {
             onClick={() => setIndex(i)}
           />
         ))}
-      </ThumbnailGrid>
+      </ThumbnailRow>
     </Wrapper>
   );
 }
