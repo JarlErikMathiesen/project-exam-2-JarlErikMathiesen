@@ -120,18 +120,14 @@ export default function VenueGallery({ media, name }) {
       </MainImageWrapper>
 
       <ThumbnailGrid>
-        {images.slice(1, 5).map((img, i) => {
-          const realIndex = i + 1;
-
-          return (
-            <Thumbnail
-              key={realIndex}
-              src={img}
-              active={realIndex === index}
-              onClick={() => setIndex(realIndex)}
-            />
-          );
-        })}
+        {images.slice(0, 5).map((img, i) => (
+          <Thumbnail
+            key={i}
+            src={img}
+            active={i === index}
+            onClick={() => setIndex(i)}
+          />
+        ))}
       </ThumbnailGrid>
     </Wrapper>
   );
