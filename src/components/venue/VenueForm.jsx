@@ -8,6 +8,7 @@ import CheckboxField from '../ui/CheckboxField';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useFieldArray } from 'react-hook-form';
 
 const schema = yup.object({
   name: yup
@@ -33,7 +34,14 @@ const schema = yup.object({
     .required('Max guests is required')
     .min(1, 'At least 1 guest'),
 
-  imageUrl: yup.string().url('Must be a valid URL').nullable(),
+  media: yup.array().of(
+    yup.object({
+      url: yup
+        .string()
+        .url('Must be a valid URL')
+        .required('Image URL is required'),
+    }),
+  ),
 
   city: yup
     .string()
@@ -54,7 +62,8 @@ export default function VenueForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    control,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
     mode: 'onBlur',
@@ -64,10 +73,15 @@ export default function VenueForm({
       description: initialData.description || '',
       price: initialData.price || '',
       maxGuests: initialData.maxGuests || '',
-      imageUrl: initialData.media?.[0]?.url || '',
+      media: initialData.media?.length > 0 ? initialData.media : [{ url: '' }],
       city: initialData.location?.city || '',
       country: initialData.location?.country || '',
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'media',
   });
 
   const [meta, setMeta] = useState({
@@ -90,7 +104,12 @@ export default function VenueForm({
       price: Number(data.price),
       maxGuests: Number(data.maxGuests),
 
-      media: data.imageUrl ? [{ url: data.imageUrl, alt: data.name }] : [],
+      media:
+        data.media
+          ?.filter((img) => img.url)
+          .map((img) => ({
+            url: img.url,
+          })) || [],
 
       location: {
         city: data.city || null,
@@ -109,12 +128,19 @@ export default function VenueForm({
         <FormField label="Name" id="name" error={errors.name?.message}>
           <Input id="name" placeholder="Enter name.." {...register('name')} />
         </FormField>
-        <FormField label="Image" id="image" error={errors.imageUrl?.message}>
-          <Input
-            id="image"
-            placeholder="Enter image URL"
-            {...register('imageUrl')}
-          />
+        <FormField label="Images">
+          {fields.map((field, index) => (
+            <ImageRow key={field.id}>
+              <Input
+                placeholder="Image URL"
+                {...register(`media.${index}.url`)}
+              />
+            </ImageRow>
+          ))}
+
+          <Button type="button" onClick={() => append({ url: '', alt: '' })}>
+            + Add image
+          </Button>
         </FormField>
         <Row>
           <FormField label="Price" id="price" error={errors.price?.message}>
@@ -178,6 +204,10 @@ export default function VenueForm({
     </FormWrapper>
   );
 }
+
+const ImageRow = styled.div`
+  margin-bottom: 10px;
+`;
 
 const FormWrapper = styled.div`
   display: flex;
