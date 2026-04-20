@@ -121,16 +121,18 @@ export default function VenueGallery({ media, name }) {
         )}
       </MainImageWrapper>
 
-      <ThumbnailRow>
-        {images.map((img, i) => (
-          <Thumbnail
-            key={i}
-            src={img}
-            active={i === index}
-            onClick={() => setIndex(i)}
-          />
-        ))}
-      </ThumbnailRow>
+      {images.length > 1 && (
+        <ThumbnailRow>
+          {images.map((img, i) => (
+            <Thumbnail
+              key={i}
+              src={img}
+              active={i === index}
+              onClick={() => setIndex(i)}
+            />
+          ))}
+        </ThumbnailRow>
+      )}
     </Wrapper>
   );
 }
