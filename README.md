@@ -84,28 +84,30 @@ All requests are handled through a centralized `apiFetch()` function that:
 
 Clone the repository:
 
+```bash
 git clone <your-repo-url>
+```
 
 Navigate into the project folder:
 
-bash```
+```bash
 cd holidaze
 ```
 
 Install dependencies:
 
-bash```
+```bash
 npm install
 ```
 
 Run development server:
 
-bash```
+```bash
 npm run dev
 ```
 
 Build for production:
 
-bash```
+```bash
 npm run build
 ```
