@@ -73,28 +73,41 @@ All requests are handled through a centralized `apiFetch()` function that:
 
 ---
 
-🚀 Setup and Installation
-Prerequisites
-Node.js (>= 18)
-Noroff API key
-Installation
+## 🚀 Setup and Installation
+
+### Prerequisites
+
+- Node.js (>= 18)
+- Noroff API key
+
+### Installation
 
 Clone the repository:
 
 git clone <your-repo-url>
 
 Navigate into the project folder:
+
 bash```
 cd holidaze
 
+````
+
 Install dependencies:
+
 bash```
 npm install
+````
 
 Run development server:
+
 bash```
 npm run dev
 
+````
+
 Build for production:
+
 bash```
 npm run build
+````
