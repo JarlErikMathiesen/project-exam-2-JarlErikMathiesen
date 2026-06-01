@@ -1,5 +1,6 @@
 # Holidaze – Accommodation Booking Front-End
 
+![image]([https://user-images.githubusercontent.com/52622303/164316813-4b12d99f-aeb7-4069-85cf-e72b3a50ac99.png](https://www.jarlerm.no/wp-content/uploads/2026/06/Screenshot-2026-05-16-131202.png))
 Welcome to **Holidaze**, a modern accommodation booking platform. This project is a single-page application built as part of Project Exam 2. It allows users to browse venues, make bookings, and manage listings through the Noroff v2 API.
 
 The application supports both **customers** and **venue managers**, each with tailored functionality.
